@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="active-pro">
-            <a href="/Ayuda">
+            <a href="/AyudaLider">
               <i class="now-ui-icons objects_support-17"></i>
               <p>Soporte Técnico</p>
             </a>

@@ -142,8 +142,8 @@ $router->post('/lider/proyectos/tablon/comentarios',[LiderController::class,'com
 $router->get('/lider/proyectos/tablon/contenido',[LiderController::class,'contenido']);
 
 //Comentar y descargar manual.
-$router->get('/Ayuda',[LiderController::class,'retro']);
-$router->post('/Ayuda',[LiderController::class,'retro']);
+$router->get('/AyudaLider',[LiderController::class,'retro']);
+$router->post('/AyudaLider',[LiderController::class,'retro']);
 
 //Usuarios
 $router->get('/usuario/usuario',[UsuarioController::class,'usuario']);

@@ -200,6 +200,7 @@
                 <?php foreach($tareas as $tarea) { ?>
                   <tr>
                       <?php if($tarea->IdGrupo==$grupo->id) { ?>
+                        
                       <th scope="row"><?php echo $tarea->nombre ?></th>  
                         <td>
                           <?php foreach($usuarioTareas as $usuarioTarea) { ?>

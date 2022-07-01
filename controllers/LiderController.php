@@ -157,6 +157,7 @@ class LiderController{
         //Te muestra los grupos, taress y personas correpondientes a un tablon
         isLider();
         // expira();
+        // debuguear("AQui");
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -195,6 +196,7 @@ class LiderController{
             
             $grupo->guardar();   
         }
+        // debuguear($grupo);
         $router->render('lider/tablon',[
             'tablon'=>$tablon,
             'alertas'=>$alertas,
@@ -257,11 +259,13 @@ class LiderController{
     public static function grupo(Router $router)
     {
         //Crear un grupo dentro de un tablon
+        
         isLider();
         // expira();
         // if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
         //     header("Location: /lider/proyectos");
         // }
+        // debuguear("AQUI");
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -272,19 +276,32 @@ class LiderController{
         $url=$_GET['url'];
         $url1=$url;
         $tablon=Tablon::where('url',$url);
+        $grupos=Grupo::belogsTo('idTablon',$tablon->id);
         $grupo=new Grupo();
         if($_SERVER['REQUEST_METHOD']==='POST'){
             $grupo->sincronizar($_POST);
             $alertas=$grupo->validarGrupo();
             if(empty($alertas))
             {
+                
                 $grupo->idTablon=$tablon->id;
                 if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
                     header("Location: /lider/proyectos");
                     
                 }
-                
                 $resultado=$grupo->guardar();
+                $tarea=new Tarea();
+                $tarea->nombre="Default";
+                $tarea->IdGrupo=$grupo->id;
+                $tarea->estado='0';
+                $tarea->fecha=date('d-m-Y');
+                $hash=md5(uniqid());
+                $tarea->url=$hash;
+                
+                // $resultado=$tarea->guardar();
+                // debuguear($resultado);
+                
+
                 if($resultado){
                     header("Location: /lider/proyectos/tablon?url=$url1&id=1");
                 }
@@ -293,7 +310,8 @@ class LiderController{
         $router->render('lider/tablon',[
             'tablon'=>$tablon,
             'alertas'=>$alertas,
-            'resultado'=>$id
+            'resultado'=>$id,
+            'grupos'=>$grupos
         ]);
        
     }
@@ -709,7 +727,7 @@ class LiderController{
                 
                 if($resultado)
                 {
-                    header("Location: /Ayuda?id=5");
+                    header("Location: /AyudaLider?id=5");
                 }
             }
         }

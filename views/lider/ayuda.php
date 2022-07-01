@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="active-pro active">
-            <a href="/Ayuda">
+            <a href="/AyudaLider">
               <i class="now-ui-icons objects_support-17"></i>
               <p>Soporte Técnico</p>
             </a>
@@ -130,7 +130,7 @@
             <?php } 
           ?>
             <div class="card-body">
-                <form method="POST" action="/Ayuda" enctype="multipart/form-data">
+                <form method="POST" action="/AyudaLider" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="mb-3">
                         <label for="contenido">Agregar comentario</label>
