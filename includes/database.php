@@ -1,6 +1,6 @@
 <?php
 
-$db = new mysqli('localhost', 'root', '12345', 'terzettcontroll');
+$db = new mysqli('localhost', 'root', '12345', 'terzettcontroll'); 
 $db->set_charset("utf8");
 
 
