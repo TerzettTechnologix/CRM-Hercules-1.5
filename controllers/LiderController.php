@@ -737,6 +737,12 @@ class LiderController{
             'resultado'=>$id
         ]);
     }
+    public static function proyectoactualizar(Router $router)
+    {
+        $router->render('lider/actualizarTablon',[
+            
+        ]);
+    }
     
     
     

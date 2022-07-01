@@ -118,6 +118,10 @@ $router->post('/lider/proyectos/tablon/pdf',[LiderController::class,'pdf']);
 //Eliminar tablon permite al lider eliminar un tablon seleccionado, cuando se elimina lo manda hacia una nueva ventana que le permite descargar su pdf
 $router->post('/lider/proyectos/eliminar',[LiderController::class,'proyectoseliminar']);
 
+//Modificar un tablon
+$router->get('/lider/proyectos/tablon/editar',[LiderController::class,'proyectoactualizar']);
+$router->post('/lider/proyectos/tablon/editar',[LiderController::class,'proyectoactualizar']);
+
 //Crear un grupo, crea un grupo dentro del tablon seleccionado
 $router->post('/lider/proyectos/grupo',[LiderController::class,'grupo']);
 
