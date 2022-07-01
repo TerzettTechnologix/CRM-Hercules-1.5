@@ -73,7 +73,7 @@
               <p>Cerrar sesión</p>
             </a>
           </li>
-          <li class="active-pro">
+          <li class="active-pro active">
             <a href="/Ayuda">
               <i class="now-ui-icons objects_support-17"></i>
               <p>Soporte Técnico</p>
@@ -142,7 +142,7 @@
                     <button type="submit" class="btn btn-primary mt-2">Guardar</button>
                   </form>
                   <label class="mb-2">¿Tienes alguna duda?</label>
-                  <a href="/archivos/ManualEmpleado.pdf" class="btn btn-primary">Pulsa aqui para descargar el manual</a>
+                  <a href="/archivos/ManualLider.pdf" class="btn btn-primary">Descargar manual</a>
                 </table>
               </div>
             </div>
