@@ -1,0 +1,16 @@
+{
+    "name": "victo/terzet-proyecto",
+    "description": "Proyecto Terzett",
+    "type":"project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\":"./",
+            "Controllers\\":"./controllers",
+            "Model\\":"./models"
+        }
+    },
+    "require": {
+        "mpdf/mpdf": "^8.1",
+        "intervention/image": "^2.7"
+    }
+}
