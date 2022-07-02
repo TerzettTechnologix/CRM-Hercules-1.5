@@ -57,13 +57,19 @@
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
         <li>
-            <a href="/lider/usuario">
+            <a href="/admin/usuario">
               <i class="now-ui-icons users_single-02"></i>
               <p>Cuenta</p>
             </a>
           </li>
           <li class="active ">
-            <a href="/lider/proyectos">
+            <a href="/admin/usuarios">
+              <i class="now-ui-icons business_badge"></i>
+              <p>Usuarios</p>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/proyectos">
               <i class="now-ui-icons education_atom"></i>
               <p>Proyectos</p>
             </a>
@@ -75,7 +81,7 @@
             </a>
           </li>
           <li class="active-pro">
-            <a href="/AyudaLider">
+            <a href="/Retro">
               <i class="now-ui-icons objects_support-17"></i>
               <p>Soporte Técnico</p>
             </a>
@@ -103,7 +109,7 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form action="/lider/proyectos/filtro" method="POST">
+            <form action="/admin/proyectos/filtro" method="POST">
               <div class="input-group no-border">
                 <input type="search" aria-label="Search"  id="nombre" name="busqueda" class="form-control" placeholder="Buscar...">
                 <div class="input-group-append">
@@ -122,9 +128,9 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="/lider/proyectos/filtro?filtro=0">Ford</a>
-                  <a class="dropdown-item" href="/lider/proyectos/filtro?filtro=1">BD</a>
-                  <a class="dropdown-item" href="/lider/proyectos/filtro?filtro=2">Internos</a>
+                  <a class="dropdown-item" href="/admin/proyectos/filtro?filtro=0">Ford</a>
+                  <a class="dropdown-item" href="/admin/proyectos/filtro?filtro=1">BD</a>
+                  <a class="dropdown-item" href="/admin/proyectos/filtro?filtro=2">Internos</a>
                 </div>
               </li>
             </ul>
@@ -147,75 +153,36 @@
           <?php
               include_once __DIR__."/../templates/alertas.php";
           ?>
-          <?php 
+          <!-- <?php 
             $mensaje = mostrarNotificacion( intval( $resultado) );
             if($mensaje) { ?>
               <p class="alert alert-success text-white font-weight-bold text-center text-uppercase"><?php echo s($mensaje); ?></p>
             <?php } 
-          ?>
-        <form method="POST" action="/lider/proyectos">
+          ?> -->
+        <form method="POST" action="/admin/proyectos/tablon/editar?url=<?php echo $tablon->url?>">
             <div class="container">
-            <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre del tablón</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo s($tablon->nombre) ?>">
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo ($tablon->nombre) ?>">
                 </div>
                 <div class="mb-3">
                   <label for="lugar" class="form-label">Lugar del Tablon</label>
                   <select class="form-select" aria-label="Selecciona el lugar donde se desarrolla el proyecto" name="lugar">
-                      <option value="0">FORD</option>
-                      <option value="1">BD</option>
-                      <option value="2">Interno</option>
+                      <option value="0" <?php if($tablon->lugar==0) echo "selected" ?>>FORD</option>
+                      <option value="1" <?php if($tablon->lugar==1) echo "selected" ?>>BD</option>
+                      <option value="2" <?php if($tablon->lugar==2) echo "selected" ?>>Internos</option>
+                     
                   </select>
-                </div>
                 <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion" value="<?php echo s($tablon->nombre) ?>" ></textarea>
+                    <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion"  ><?php echo $tablon->descripcion?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
             </div>
         </form>
-        <?php if(empty($tablones)) {?>
-            <p class="text-center">No hay tablones con estos parametros o no has creado alguno aun</p>
-
-        <?php } ?>
-          <?php foreach($tablones as $tablon) {?>
-            <div class="card text-center container">
-                <div class="card-header">
-                    <strong>Líder de proyecto:<br></strong>  <?php echo $tablon->lider; ?>
-                </div>
-                  <div class="card-body">
-                <strong>Título:<br></strong>
-                  <p class="card-text"><?php echo $tablon->nombre; ?></p>
-                <strong>Descripción:<br></strong>
-                  <p class="card-text"><?php echo $tablon->descripcion; ?></p>
-                <strong>Destino de proyecto:<br></strong>
-                  <?php if($tablon->lugar=='0') $tablon->lugar="FORD" ?>
-                  <p><?php if($tablon->lugar=='1') $tablon->lugar="BD" ?>
-                  <?php if($tablon->lugar=='2') $tablon->lugar="Interno" ?>
-                  <p class="card-text"><?php echo $tablon->lugar?></p>
-                <strong>Fecha de creación:<br></strong> 
-                <?php echo $tablon->fecha; ?>
-                  <div class="btn-toolbar justify-content-center">
-                    <a href="/lider/proyectos/tablon?url=<?php echo $tablon->url?>" class="btn btn-primary ml-3">Detalles del tablón</a>
-                    <form method="POST" action="/lider/proyectos/eliminar?url=<?php echo $tablon->url?>" class="eliminar">
-                      <button href="/lider/proyectos/eliminar?url=<?php echo $tablon->url?>" class="btn btn-danger ml-3">Eliminar del tablón</button>
-                    </form>
-                    <!-- <form method="POST" action="/lider/proyectos/tablon/editar?url=<?php echo $tablon->url?>">
-                      <button href="/lider/proyectos/tablon/editar?url=<?php echo $tablon->url?>" class="btn btn-info ml-3 text-white">Actualizar el Tablon</button>
-                    </form> -->
-                    <a href="/lider/proyectos/tablon/editar?url=<?php echo $tablon->url?>" class="btn btn-info ml-3 text-white">Actualizar el tablon</a>
-                    <!-- <button data-id="<?php echo $tablon->url?>" class="btn btn-danger ml-3 button">Eliminar el tablón</button> -->
-                    <form method="POST" action="/lider/proyectos/tablon/pdf?url=<?php echo $tablon->url?>">
-                      <button href="/lider/proyectos/tablon/pdf=<?php echo $tablon->url?>" class="btn btn-success ml-3">Descargar el tablón</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <?php } ?>
             </div>
          
           </div>

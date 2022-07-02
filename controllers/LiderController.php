@@ -529,13 +529,6 @@ class LiderController{
             
             } 
             
-            
-            
-            // $resultado=$tablon->eliminar();
-            // if($resultado){
-            //     header("Location: /admin/proyectos?id=3");
-            // } 
-            
         }
         
     }
@@ -568,7 +561,6 @@ class LiderController{
        
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
-            $comentario=new Comentario();
             $comentario=new Comentario();
             
             if($_FILES['imagen'])
@@ -637,8 +629,6 @@ class LiderController{
             }
             if(empty($alertas))
             {
-                
-                
                 $resultado=$comentario->guardar();
                 if($resultado)
                 {
@@ -739,8 +729,25 @@ class LiderController{
     }
     public static function proyectoactualizar(Router $router)
     {
+        $alertas=[];
+        $url=$_GET['url'];
+        $tablon=Tablon::where('url',$url);
+        if($_SERVER['REQUEST_METHOD']==='POST')
+        {
+            $tablon->sincronizar($_POST);
+            $alertas=$tablon->validarTablon();
+            if(empty($alertas))
+            {
+                $resultado=$tablon->guardar();
+                if($resultado)
+                {
+                    header("Location:/lider/proyectos?id=2");
+                }
+            }
+        }
         $router->render('lider/actualizarTablon',[
-            
+            'tablon'=>$tablon,
+            'alertas'=>$alertas
         ]);
     }
     

@@ -212,6 +212,7 @@
                       <button href="/admin/proyectos/eliminar?url=<?php echo $tablon->url?>" class="btn btn-danger ml-3">Eliminar del tablón</button>
                     </form>
                     <!-- <button data-id="<?php echo $tablon->url?>" class="btn btn-danger ml-3 button">Eliminar el tablón</button> -->
+                    <a href="/admin/proyectos/tablon/editar?url=<?php echo $tablon->url?>" class="btn btn-info ml-3 text-white">Actualizar el tablon</a>
                     <form method="POST" action="/admin/proyectos/tablon/pdf?url=<?php echo $tablon->url?>">
                       <button href="/admin/proyectos/tablon/pdf?url=<?php echo $tablon->url?>" class="btn btn-success ml-3">Descargar el tablón</button>
                     </form>

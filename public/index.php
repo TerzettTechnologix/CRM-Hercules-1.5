@@ -77,6 +77,9 @@ $router->post('/admin/proyectos/grupo',[AdminController::class,'grupo']);
 //Mostrar el tablon que el usario selecciona
 $router->get('/admin/proyectos/tablon',[AdminController::class,'tablon']);
 
+//Modificar un tablon
+$router->get('/admin/proyectos/tablon/editar',[AdminController::class,'proyectoactualizar']);
+$router->post('/admin/proyectos/tablon/editar',[AdminController::class,'proyectoactualizar']);
 
 //Crear tareas a grupos
 $router->post('/admin/proyectos/tarea',[AdminController::class,'tarea']);

@@ -147,41 +147,36 @@
           <?php
               include_once __DIR__."/../templates/alertas.php";
           ?>
-          <?php 
+          <!-- <?php 
             $mensaje = mostrarNotificacion( intval( $resultado) );
             if($mensaje) { ?>
               <p class="alert alert-success text-white font-weight-bold text-center text-uppercase"><?php echo s($mensaje); ?></p>
             <?php } 
-          ?>
-        <form method="POST" action="/lider/proyectos">
+          ?> -->
+        <form method="POST" action="/lider/proyectos/tablon/editar?url=<?php echo $tablon->url?>">
             <div class="container">
-            <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre del tablón</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo s($tablon->nombre) ?>">
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo ($tablon->nombre) ?>">
                 </div>
                 <div class="mb-3">
                   <label for="lugar" class="form-label">Lugar del Tablon</label>
                   <select class="form-select" aria-label="Selecciona el lugar donde se desarrolla el proyecto" name="lugar">
-                      <option value="0">FORD</option>
-                      <option value="1">BD</option>
-                      <option value="2">Interno</option>
+                      <option value="0" <?php if($tablon->lugar==0) echo "selected" ?>>FORD</option>
+                      <option value="1" <?php if($tablon->lugar==1) echo "selected" ?>>BD</option>
+                      <option value="2" <?php if($tablon->lugar==2) echo "selected" ?>>Internos</option>
+                     
                   </select>
-                </div>
                 <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion" value="<?php echo s($tablon->nombre) ?>" ></textarea>
+                    <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion"  ><?php echo $tablon->descripcion?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
             </div>
         </form>
-        <?php if(empty($tablones)) {?>
-            <p class="text-center">No hay tablones con estos parametros o no has creado alguno aun</p>
-
-        <?php } ?>
             </div>
          
           </div>

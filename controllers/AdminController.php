@@ -702,6 +702,29 @@ class AdminController{
             
         ]);
     }
+    public static function proyectoactualizar(Router $router)
+    {
+        $alertas=[];
+        $url=$_GET['url'];
+        $tablon=Tablon::where('url',$url);
+        if($_SERVER['REQUEST_METHOD']==='POST')
+        {
+            $tablon->sincronizar($_POST);
+            $alertas=$tablon->validarTablon();
+            if(empty($alertas))
+            {
+                $resultado=$tablon->guardar();
+                if($resultado)
+                {
+                    header("Location:/admin/proyectos?id=2");
+                }
+            }
+        }
+        $router->render('admin/actualizarTablon',[
+            'tablon'=>$tablon,
+            'alertas'=>$alertas
+        ]);
+    }
 
    
     
