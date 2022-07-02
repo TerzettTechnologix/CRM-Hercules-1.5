@@ -184,8 +184,10 @@
             </div>
             </div>
         </div>
+        <?php debuguear($grupos)?>
+        <div class="container">
         <?php foreach($grupos as $grupo){ ?>         
-          <div class="container">
+          
           <table class="table">
               <thead>
                 <tr>
@@ -196,58 +198,14 @@
                   <th scope="col"><strong>Acciones</strong></th>
                 </tr>
               </thead>
-              <tbody> 
-                <?php foreach($tareas as $tarea) { ?>
-                  <tr>
-                      <?php if($tarea->IdGrupo==$grupo->id) { ?>
-                        
-                      <th scope="row"><?php echo $tarea->nombre ?></th>  
-                        <td>
-                          <?php foreach($usuarioTareas as $usuarioTarea) { ?>
-                            
-                            <?php if($tarea->id==$usuarioTarea->IdTarea) echo $usuarioTarea->nombre . '<br>'  ?>
-                            
-                            <?php } ?>
-  
-                        </td>
-                      <?php if($tarea->estado=='0') $tarea->estado="Nueva" ?>
-                      <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
-                      <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
-                      <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
-                      <td><?php echo $tarea->estado ?></td>
-                      
-                      <td><?php echo $tarea->fecha ?></td> 
-                      <td>
-                      <div class="d-flex align-items-center">
-                        <a href="/admin/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url?>" rel="tooltip" title="Actualizar información" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
-                            <i class="now-ui-icons design-2_ruler-pencil"></i>
-                        </a>
-                        <form method="POST" action="/admin/proyectos/tablon/eliminar?url=<?php echo $tarea->url?>">
-                          <button href="/admin/proyectos/tablon/eliminar?url=<?php echo $tarea->url?>" rel="tooltip" title="Eliminar tarea" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
-                              <i class="now-ui-icons ui-1_simple-remove"></i>
-                          </button>
-                        </form>
-                        
-                        <a href="/admin/proyectos/tablon/comentarios?url=<?php echo $tarea->url?>" rel="tooltip" title="Agregar comentarios-complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
-                            <i class="now-ui-icons ui-1_simple-add"></i>
-                          </a>
-                        <a href="/admin/proyectos/tablon/contenido?url=<?php echo $tarea->url?>" rel="tooltip" title="Visualizar complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
-                            <i class="now-ui-icons design_bullet-list-67"></i>
-                          </a>
-                          </div>
-                      </td>
-                    </tr>
-                    <?php } ?>
-                <?php } ?>
+              <tbody>
+               
               </tbody>
+              
             </table>
             <div class="progress">
-                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo ($grupo->nuevas/$grupo->total) *100  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." ". round(($grupo->nuevas/$grupo->total),2)  *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: <?php echo ($grupo->proceso/$grupo->total) *100  ?>%"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><?php echo "Proceso" ." ". round(($grupo->proceso/$grupo->total),2) *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: <?php echo ($grupo->estancadas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Estancadas" ." ". round(($grupo->estancadas/$grupo->total),2) *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <?php echo ($grupo->listas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Listas" ." ". round(($grupo->listas/$grupo->total),2) *100 ." " ."%" ?></div>
-              </div> 
-          </div>
+              <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo 50?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." "  ?></div>
+            </div>
         <?php } ?>
       <footer class="footer">
         <div class=" container-fluid ">
