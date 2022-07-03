@@ -189,6 +189,10 @@ class LiderController{
             $grupo=Grupo::where('id',$grupo->id);
             $grupo->id=$id;
             $grupo->total=$grupo->total($grupo->id);
+            if($grupo->total==0)
+            {
+                $grupo->total=1;
+            }
             $grupo->nuevas=$grupo->estado($grupo->id,0);
             $grupo->estancadas=$grupo->estado($grupo->id,1);
             $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -386,6 +390,10 @@ class LiderController{
                 {
                     $grupo=Grupo::where('id',$grupo->id);
                     $grupo->total=$grupo->total($grupo->id);
+                    if($grupo->total==0)
+                    {   
+                        $grupo->total=1;
+                    }
                     $grupo->nuevas=$grupo->estado($grupo->id,0);
                     $grupo->estancadas=$grupo->estado($grupo->id,1);
                     $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -472,6 +480,10 @@ class LiderController{
                 
                 $grupo=Grupo::where('id',$grupo->id);
                 $grupo->total=$grupo->total($grupo->id);
+                if($grupo->total==0)
+                {
+                    $grupo->total=1;
+                }
                 $grupo->nuevas=$grupo->estado($grupo->id,0);
                 $grupo->estancadas=$grupo->estado($grupo->id,1);
                 $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -500,7 +512,6 @@ class LiderController{
         //Permite eliminar una tarea
         isLider();
         // expira();
-        
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $url=$_GET['url'];
@@ -518,6 +529,10 @@ class LiderController{
                 if($resultado){
                     $grupo=Grupo::where('id',$grupo->id);
                     $grupo->total=$grupo->total($grupo->id);
+                    if($grupo->total==0)
+                    {
+                        $grupo->total=1;
+                    }
                     $grupo->nuevas=$grupo->estado($grupo->id,0);
                     $grupo->estancadas=$grupo->estado($grupo->id,1);
                     $grupo->proceso=$grupo->estado($grupo->id,2);

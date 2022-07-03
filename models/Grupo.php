@@ -19,11 +19,11 @@ class Grupo extends ActiveRecord{
         $this->id=$args['id'] ?? null;
         $this->nombre=$args['nombre'] ?? '';
         $this->idTablon=$args['idTablon'] ?? '';
-        $this->total=$args['idTablon'] ?? '';
-        $this->nuevas=$args['nuevas'] ?? '';
-        $this->estancadas=$args['estancadas'] ?? '';
-        $this->proceso=$args['proceso'] ?? '';
-        $this->listas=$args['listas'] ?? '';
+        $this->total=$args['idTablon'] ?? 1;
+        $this->nuevas=$args['nuevas'] ?? 0;
+        $this->estancadas=$args['estancadas'] ?? 0;
+        $this->proceso=$args['proceso'] ?? 0;
+        $this->listas=$args['listas'] ?? 0;
     }
     //Mensajes de validacion para la creacion de una cuenta
     public function validarGrupo(){

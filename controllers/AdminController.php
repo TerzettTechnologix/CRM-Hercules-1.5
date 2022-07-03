@@ -193,6 +193,10 @@ class AdminController{
             if($resultado){
                 $grupo=Grupo::where('id',$grupo->id); //Se hace una actualizacion del total de tareas que tiene ese grupo, eso se hace para que el uusario vea reflejada la eliminacion en la barra de progreso
                 $grupo->total=$grupo->total($grupo->id);
+                if($grupo->total==0)
+                {
+                    $grupo->total=1;
+                }
                 $grupo->nuevas=$grupo->estado($grupo->id,0);
                 $grupo->estancadas=$grupo->estado($grupo->id,1);
                 $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -271,6 +275,11 @@ class AdminController{
             $grupo=Grupo::where('id',$grupo->id); //Actualiza la tabla de grupos con todas las tareas que se tienen en ese gurpo por estado
             $grupo->id=$id;
             $grupo->total=$grupo->total($grupo->id);
+            if($grupo->total==0)
+            {
+                $grupo->total=1;
+            }
+            
             $grupo->nuevas=$grupo->estado($grupo->id,0);
             $grupo->estancadas=$grupo->estado($grupo->id,1);
             $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -363,6 +372,10 @@ class AdminController{
                     {
                         $grupo=Grupo::where('id',$grupo->id);
                         $grupo->total=$grupo->total($grupo->id);
+                        if($grupo->total==0)
+                        {
+                            $grupo->total=1;
+                        }
                         $grupo->nuevas=$grupo->estado($grupo->id,0);
                         $grupo->estancadas=$grupo->estado($grupo->id,1);
                         $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -545,6 +558,10 @@ class AdminController{
                 
                 $grupo=Grupo::where('id',$grupo->id);
                 $grupo->total=$grupo->total($grupo->id);
+                if($grupo->total==0)
+                {
+                    $grupo->total=1;
+                }
                 $grupo->nuevas=$grupo->estado($grupo->id,0);
                 $grupo->estancadas=$grupo->estado($grupo->id,1);
                 $grupo->proceso=$grupo->estado($grupo->id,2);

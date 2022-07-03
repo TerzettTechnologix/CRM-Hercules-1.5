@@ -55,10 +55,10 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-        <li>
-            <a href="/lider/usuario">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>Cuenta</p>
+          <li>
+            <a href="/lider/usuarios">
+              <i class="now-ui-icons business_badge"></i>
+              <p>Usuarios</p>
             </a>
           </li>
           <li class="active ">
@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="active-pro">
-            <a href="/AyudaLider">
+            <a href="/RetroLider">
               <i class="now-ui-icons objects_support-17"></i>
               <p>Soporte Técnico</p>
             </a>
@@ -94,7 +94,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand"><?php echo $tablon->nombre; ?></a>
+            <a class="navbar-brand" href="#pablo"><?php echo $tablon->nombre; ?></a>
           </div>
         </div>
       </nav>
@@ -172,15 +172,19 @@
                </ul> 
               <?php }?>
               </div>
+              </div>
               <button type="submit" class="btn btn-primary ">Guardar</button>
+            </form>  
+            </div>
             </div>
         </div>
+        <div class="container">
         <?php foreach($grupos as $grupo){ ?>         
-          <div class="container">
+          
           <table class="table">
               <thead>
                 <tr>
-                <th class="text-primary" scope="col"><?php echo $grupo->nombre ?></th>
+                  <th class="text-primary" scope="col"><?php echo $grupo->nombre ?></th>
                   <th scope="col"><strong>Asignación</strong></th>
                   <th scope="col"><strong>Estado</strong></th>
                   <th scope="col"><strong>Fecha de creación</strong></th>
@@ -232,12 +236,11 @@
               </tbody>
             </table>
             <div class="progress">
-                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo ($grupo->nuevas/$grupo->total) *100  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." ". round(($grupo->nuevas/$grupo->total),2)  *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: <?php echo ($grupo->proceso/$grupo->total) *100  ?>%"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><?php echo "Proceso" ." ". round(($grupo->proceso/$grupo->total),2) *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: <?php echo ($grupo->estancadas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Estancadas" ." ". round(($grupo->estancadas/$grupo->total),2) *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <?php echo ($grupo->listas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Listas" ." ". round(($grupo->listas/$grupo->total),2) *100 ." " ."%" ?></div>
-              </div> 
-          </div>
+              <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo ($grupo->nuevas/$grupo->total) *100  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." ". round(($grupo->nuevas/$grupo->total),2)  *100 ." " ."%" ?></div>
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: <?php echo ($grupo->proceso/$grupo->total) *100  ?>%"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><?php echo "Proceso" ." ". round(($grupo->proceso/$grupo->total),2) *100 ." " ."%" ?></div>
+              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: <?php echo ($grupo->estancadas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Estancadas" ." ". round(($grupo->estancadas/$grupo->total),2) *100 ." " ."%" ?></div>
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <?php echo ($grupo->listas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Listas" ." ". round(($grupo->listas/$grupo->total),2) *100 ." " ."%" ?></div>
+            </div>
         <?php } ?>
       <footer class="footer">
         <div class=" container-fluid ">
@@ -290,6 +293,7 @@
 
     });
   </script>
+
 </body>
 
 </html>
