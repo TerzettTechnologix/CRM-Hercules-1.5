@@ -29,9 +29,9 @@ function expira()
     $fechaGuardada=$_SESSION["ultimoAcceso"];
     $ahora=date("Y-n-j H:i:s");
     $tiempo_transcurido=(strtotime($ahora)-strtotime($fechaGuardada));
-    if($tiempo_transcurido >=600){
+    if($tiempo_transcurido >=1200){
         session_destroy();
-        header("Location : /");
+       
     }
 }
 // Muestra los mensajes
