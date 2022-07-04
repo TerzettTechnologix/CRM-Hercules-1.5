@@ -72,6 +72,7 @@ class LoginController{
         $usuario=Usuario::find($id);
         $contraseña=password_hash("12345",PASSWORD_DEFAULT);
         $usuario->contraseña=$contraseña;
+        $usuario->activo=0;
         $resultado=$usuario->guardar();
         if($resultado){
             header("Location: /admin/usuarios?id=2");

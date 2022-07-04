@@ -166,8 +166,9 @@ class ActiveRecord {
     }
     public static function allFecha()
     {
-        $query="SELECT * FROM"  ." ". static::$tabla ." " ."ORDER BY fecha desc";
+        $query="SELECT * FROM"  ." ". static::$tabla ." " ."ORDER BY fecha asc";
         $resultado = self::consultarSQL($query);
+        
         return $resultado;
 
     }
@@ -229,7 +230,7 @@ class ActiveRecord {
     // Busca un registro por su id
     public static function find($id) {
         $query = "SELECT * FROM " . static::$tabla  ." WHERE id = ${id}";
-        debuguear($query);
+        // debuguear($query);
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
     }
@@ -342,6 +343,7 @@ class ActiveRecord {
         $query .=  join(', ', $valores );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
+        // debuguear($query);
         // Actualizar BD
         $resultado = self::$db->query($query);
         return $resultado;

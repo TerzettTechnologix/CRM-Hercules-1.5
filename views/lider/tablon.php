@@ -56,7 +56,7 @@
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="/lider/usuarios">
+            <a href="/lider/usuario">
               <i class="now-ui-icons business_badge"></i>
               <p>Usuarios</p>
             </a>
@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="active-pro">
-            <a href="/RetroLider">
+            <a href="/AyudaLider">
               <i class="now-ui-icons objects_support-17"></i>
               <p>Soporte Técnico</p>
             </a>

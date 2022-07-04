@@ -197,6 +197,7 @@ class AdminController{
                 {
                     $grupo->total=1;
                 }
+                
                 $grupo->nuevas=$grupo->estado($grupo->id,0);
                 $grupo->estancadas=$grupo->estado($grupo->id,1);
                 $grupo->proceso=$grupo->estado($grupo->id,2);
