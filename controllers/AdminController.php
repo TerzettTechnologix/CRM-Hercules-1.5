@@ -49,6 +49,7 @@ class AdminController{
             }
             if(empty($alertas)){
                 $usuario->hashPassword(); //Se hashea el password del usuario
+
                 $valor=$usuario->tipo; //Dependiendo del rol se le agrega un tipo
                 if($valor=="Lider"){
                     $usuario->rol="1";
@@ -58,8 +59,9 @@ class AdminController{
                     $usuario->rol="0";
                 }
                 //Crear al usuario
-                
+                $usuario->activo=0;
                 $resultado=$usuario->guardar();
+
                 if($resultado){
                     header("Location: /admin/usuarios?id=1");
                 }

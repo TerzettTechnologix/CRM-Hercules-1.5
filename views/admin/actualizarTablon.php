@@ -146,9 +146,6 @@
           <div class="card">
             <div class="card-header d-flex bd-highlight">
               <h4 class="card-title p-2 flex-grow-1 bd-highlight">Proyectos</h4>
-              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-              Crear tablón
-            </a>
             </div>
           <?php
               include_once __DIR__."/../templates/alertas.php";

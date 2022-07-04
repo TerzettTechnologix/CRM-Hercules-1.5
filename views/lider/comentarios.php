@@ -132,9 +132,9 @@
                         <textarea class="form-control" id="contenido" rows="3" placeholder="¿Qué esta pasando?" name="contenido"></textarea>
                      </div>
                     </div>
-                    <label for="imagen" class="mb-2">Imagen</label>
-                    <input type="file" id="imagen" class="form-control" name="imagen" accept="image/jpeg, image/png" class="mb-2">
-                    <label for="imagen" class="mt-2">Archivo</label>
+                    <label for="imagen" class="mb-2">Imagen (.jpg .png .jpeg)</label>
+                    <input type="file" id="imagen" class="form-control" name="imagen" accept="image/jpeg, image/png, image/jpeg" class="mb-2">
+                    <label for="imagen" class="mt-2">Archivo (.xlsx .doc .pdf .docx .pptx)</label>
                     <input type="file" id="archivo" class="form-control" name="archivo" accept=".doc,.docx,.xlsx,.pptx,.pdf">
                     <button type="submit" class="btn btn-primary mt-2">Guardar</button>
                   </form>
