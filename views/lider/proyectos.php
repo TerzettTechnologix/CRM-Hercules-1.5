@@ -202,7 +202,7 @@
                   <div class="btn-toolbar justify-content-center">
                     <a href="/lider/proyectos/tablon?url=<?php echo $tablon->url?>" class="btn btn-primary ml-3">Detalles del tablón</a>
                     <form method="POST" action="/lider/proyectos/eliminar?url=<?php echo $tablon->url?>" class="eliminar">
-                      <button href="/lider/proyectos/eliminar?url=<?php echo $tablon->url?>" class="btn btn-danger ml-3">Eliminar del tablón</button>
+                      <button href="/lider/proyectos/eliminar?url=<?php echo $tablon->url?>" class="btn btn-danger ml-3">Eliminar el tablón</button>
                     </form>
                     <!-- <form method="POST" action="/lider/proyectos/tablon/editar?url=<?php echo $tablon->url?>">
                       <button href="/lider/proyectos/tablon/editar?url=<?php echo $tablon->url?>" class="btn btn-info ml-3 text-white">Actualizar el Tablon</button>

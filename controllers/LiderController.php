@@ -612,7 +612,7 @@ class LiderController{
                 $ext=pathinfo($path,PATHINFO_EXTENSION);
                 $temp_name = $_FILES['archivo']['tmp_name'];
               
-                if(($ext==='xlsx') || ($ext==='doc') || ($ext==='pdf'))
+                if(($ext==='xlsx') || ($ext==='doc') || ($ext==='pdf') || ($ext==='docx') || ($ext==='pptx'))
                 {
                     if(!is_dir(CARPETA_ARCHIVO)){
                         mkdir(CARPETA_ARCHIVO);

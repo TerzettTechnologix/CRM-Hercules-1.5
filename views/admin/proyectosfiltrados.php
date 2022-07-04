@@ -75,12 +75,6 @@
             </a>
           </li>
           <li>
-            <a href="/Retro">
-              <i class="now-ui-icons design_palette"></i>
-              <p>Ayuda</p>
-            </a>
-          </li>
-          <li>
             <a href="/logout">
               <i class="now-ui-icons objects_key-25"></i>
               <p>Cerrar sesión</p>
@@ -175,12 +169,15 @@
                   <p class="card-text"><?php echo $tablon->lugar?></p>
                   <div class="card-footer text-muted">
                     <strong>Fecha de creacion:<br></strong> <?php echo $tablon->fecha; ?>
-                  </div>
                   <div class="btn-toolbar justify-content-center">
                     <a href="/admin/proyectos/tablon?url=<?php echo $tablon->url?>" class="btn btn-primary ml-3">Detalles del tablón</a>
-                    <a href="/admin/proyectos/tablon?url=<?php echo $tablon->url?>" class="btn btn-danger ml-3">Eliminar el tablón</a>
+                    <form method="POST" action="/admin/proyectos/eliminar?url=<?php echo $tablon->url?>" class="eliminar">
+                      <button href="/admin/proyectos/eliminar?url=<?php echo $tablon->url?>" class="btn btn-danger ml-3">Eliminar del tablón</button>
+                    </form>
+                    <!-- <button data-id="<?php echo $tablon->url?>" class="btn btn-danger ml-3 button">Eliminar el tablón</button> -->
+                    <a href="/admin/proyectos/tablon/editar?url=<?php echo $tablon->url?>" class="btn btn-info ml-3 text-white">Actualizar el tablon</a>
                     <form method="POST" action="/admin/proyectos/tablon/pdf?url=<?php echo $tablon->url?>">
-                      <button href="/admin/proyectos/tablon/pdf?url=<?php echo $tablon->url?>" class="btn btn-success ml-3">Descargar el tablón</a>
+                      <button href="/admin/proyectos/tablon/pdf?url=<?php echo $tablon->url?>" class="btn btn-success ml-3">Descargar el tablón</button>
                     </form>
                   </div>
                 </div>
@@ -241,6 +238,29 @@
 
     });
   </script>
+  <script>
+$('.eliminar').submit(function(e){
+        e.preventDefault();
+        swal({
+        title: '¿Deseas eliminar?',
+        text: "¡Esta acción no se puede revertir,asegurate de descargar el pdf si de verdad desea eliminar este tablon!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si,eliminar',
+        cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            swal(
+            'Datos Eliminados!',
+            'eliminación correcta',
+            'success'
+            )
+            this.submit();
+        
+        })
+    });    
+</script>
 </body>
 
 </html>
