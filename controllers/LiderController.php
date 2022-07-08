@@ -739,8 +739,6 @@ class LiderController{
                     header("Location: /AyudaLider?id=5");
                 }
             }
-           //Enviar notificacion 
-           
         }
         
 

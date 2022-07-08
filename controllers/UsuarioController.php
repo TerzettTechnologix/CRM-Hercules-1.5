@@ -9,6 +9,7 @@ use Model\Tarea;
 use Model\UsuarioTarea;
 use Model\Comentario;
 use Model\Retro;
+use Model\Email;
 use Intervention\Image\ImageManagerStatic as Image;
 class UsuarioController{
     public static function usuario(Router $router){
@@ -356,6 +357,9 @@ class UsuarioController{
                 
                 if($resultado)
                 {
+                    $Correo="desarrollo.terzett@gmail.com";
+                    $email=new Email($Correo,$_SESSION['nombre'],$retroalimentacion->contenido);
+                    $email->enviarNotificacion();
                     header("Location: /Ayuda?id=1");
                 }
             }

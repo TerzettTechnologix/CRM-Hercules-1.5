@@ -3,7 +3,6 @@
 namespace Model;
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 class Email{
     protected $email;
     protected $nombre;
