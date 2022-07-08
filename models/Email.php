@@ -32,7 +32,7 @@ class Email{
         $mail->Subject="Correo de Notificacion";
         $mail->CharSet='UTF-8';
         $contenido='<html>';
-        $contenido.="<p><strong>El colaborador " .$this->nombre . " Envio una retroaliemntacion</strong></p>";
+        $contenido.="<p><strong>El colaborador " .$this->nombre . " Envio retroalimentacion</strong></p>";
         $contenido.="<p>$this->contenido</p>";
         $mail->Body=$contenido;
         //Enviar email
