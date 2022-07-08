@@ -9,6 +9,7 @@ use Model\Tarea;
 use Model\UsuarioTarea;
 use Model\Comentario;
 use Model\Retro;
+use Model\Email;
 use Intervention\Image\ImageManagerStatic as Image;
 class LiderController{
     public static function usuario(Router $router){
@@ -731,12 +732,18 @@ class LiderController{
                 $resultado=$retroalimentacion->guardar();
                 
                 if($resultado)
-                {
+                {   
+                    $Correo="desarrollo.terzett@gmail.com";
+                    $email=new Email($Correo,$_SESSION['nombre'],$retroalimentacion->contenido);
+                    $email->enviarNotificacion();
                     header("Location: /AyudaLider?id=5");
                 }
             }
+           //Enviar notificacion 
+           
         }
         
+
         $router->render('lider/ayuda',[
             'alertas'=>$alertas,
             'resultado'=>$id
