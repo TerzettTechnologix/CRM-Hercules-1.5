@@ -15,7 +15,7 @@ class LiderController{
     public static function usuario(Router $router){
         //Iniciarlizar el revisar si es lider y presentar su perfil
         isLider();
-        // expira();
+        expira();
         $id=$_SESSION['id'];
         $usuario=Usuario::where('id',$id);
         $router->render('lider/cuenta',[
@@ -28,7 +28,7 @@ class LiderController{
     {
         //Permite al lider restablecer su contraseña
         isLider();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -76,7 +76,7 @@ class LiderController{
     {
         
         isLider();
-        // expira();
+        expira();
         //Crear un tablon nuevo
         $alertas=[];
         // debuguear($_SESSION['id']);
@@ -119,7 +119,7 @@ class LiderController{
     {
         //Filtar los tablones por lugar BD, FORD O INTERNAS  o por palabra por ejemplo "Proyecto"
         isLider();
-        // expira();
+        expira();
         if(isset($_GET['filtro']))
         {
             
@@ -157,7 +157,7 @@ class LiderController{
         
         //Te muestra los grupos, taress y personas correpondientes a un tablon
         isLider();
-        // expira();
+        expira();
         // debuguear("AQui");
         $alertas=[];
         if(isset($_GET['id'])){
@@ -217,7 +217,7 @@ class LiderController{
     {
         //Crear PDF del tablon
         isLider();
-        // expira();
+        expira();
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
         $id=$tablon->id;
@@ -233,7 +233,7 @@ class LiderController{
     {
         //Eliminar un proyecto
         isLider();
-        // expira();
+        expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $url=$_GET['url'];
@@ -266,7 +266,7 @@ class LiderController{
         //Crear un grupo dentro de un tablon
         
         isLider();
-        // expira();
+        expira();
         // if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
         //     header("Location: /lider/proyectos");
         // }
@@ -324,7 +324,7 @@ class LiderController{
     {
         //Crear una tarea y mostrarlas
         isLider();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $idUsuario=$_GET['id'];
@@ -426,7 +426,7 @@ class LiderController{
     {
         //Permite actualizar a alguna tarea, puede ser el nombre o el estado de la tarea
         isLider();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -512,7 +512,7 @@ class LiderController{
     {
         //Permite eliminar una tarea
         isLider();
-        // expira();
+        expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             
@@ -555,7 +555,7 @@ class LiderController{
     {
         //Permite al usuario agreagar comentarios a las tareas
         isLider();
-        // expira();
+        expira();
         $url=($_GET['url']);
         $alertas=[];
         $tarea=new Tarea();
@@ -664,7 +664,7 @@ class LiderController{
     {
         //Permite al usuario visualizar contenido como comentarios o imagenes
         isLider();
-        // expira();
+        expira();
         $url=$_GET['url'];
         $tarea=new Tarea();
         // $tarea=$tarea->comprobarSiUsuarioTarea($_SESSION['id'],$url); //Revisar si la persona que intenta comentar es dueña del proyecto o participa en esa tarea
@@ -684,7 +684,7 @@ class LiderController{
     public static function retro(Router $router)
     {
         isLider();
-        // expira();
+        expira();
         if(isset($_GET['id']))
         {
             $id=$_GET['id'];
@@ -754,7 +754,7 @@ class LiderController{
     public static function proyectoactualizar(Router $router)
     {
         isLider();
-        // expira();
+        expira();
         $alertas=[];
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);

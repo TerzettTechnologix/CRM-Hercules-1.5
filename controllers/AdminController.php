@@ -16,7 +16,7 @@ class AdminController{
     public static function menu(Router $router){
         //Iniciarlizar el session y revisar si es admin
         isAuth(); //Revisa si es admin
-        // expira(); //Si despues de 10 minutos no hay actividad la sesion se cierra automaticamnte
+        expira(); //Si despues de 10 minutos no hay actividad la sesion se cierra automaticamnte
         $usuario=new Usuario();
         $usuarios=$usuario->usuariosEmpleado();
         if(isset($_GET['id'])){
@@ -33,7 +33,7 @@ class AdminController{
     public static function crear(Router $router){
         //Crear un usuario
         isAuth();
-        // expira();
+        expira();
         $usuario=new Usuario;
         $alertas=[];
         if($_SERVER['REQUEST_METHOD']==='POST'){;
@@ -77,7 +77,7 @@ class AdminController{
     {
         //actualizar a un usuario
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         $id=$_GET['id'];
         $id=filter_var($id,FILTER_VALIDATE_INT);
@@ -107,7 +107,7 @@ class AdminController{
     {
         //Crear un grupo dentro de un tablon
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -141,7 +141,7 @@ class AdminController{
     public static function eliminar()
     {
         isAuth();
-        // expira();
+        expira();
         //eliminar un usuario
         if($_SERVER['REQUEST_METHOD']==='POST'){
             $id=$_GET['id'];
@@ -160,7 +160,7 @@ class AdminController{
     public static function proyectoseliminar(Router $router)
     {
         isAuth();
-        // expira();
+        expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $url=$_GET['url'];
@@ -181,7 +181,7 @@ class AdminController{
     public static function eliminartarea(Router $route)
     {
         isAuth();
-        // expira();
+        expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $url=$_GET['url'];
@@ -213,7 +213,7 @@ class AdminController{
     {
         //Muestra todos los proyectos o tablones que se han creado y permite crear otros
         isAuth();
-        // expira();
+        expira();
         //Crear un tablon nuevo
         $alertas=[];
         $tablones=Tablon::allFecha(); //Te trae todos los tablones acomodados por fecha
@@ -251,7 +251,7 @@ class AdminController{
     {
         //Permite acceder al tablon que el usuario selecciona, si existen
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -308,7 +308,7 @@ class AdminController{
     {
         //Encargada de la creacion de las tareas por grupo y de mostarlas
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $idUsuario=$_GET['id'];
@@ -410,7 +410,7 @@ class AdminController{
     {
         //Obtener la informacion del usuario
         isAuth(); 
-        // expira();
+        expira();
         $id=$_SESSION['id'];
         $usuario=Usuario::where('id',$id);
         $router->render('admin/usuario',[
@@ -421,7 +421,7 @@ class AdminController{
     {
         //Cambiar el password de un equipo
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -469,7 +469,7 @@ class AdminController{
     {
         //Crear un pdf donde se observar los grupos, tareas y usuarios del tablon
         isAuth();
-        // expira();
+        expira();
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
         $id=$tablon->id;
@@ -485,7 +485,7 @@ class AdminController{
     {
         //Filtra los tablones por el lugar o por una palabra, FORD, BD, INTERNO o una palabra por ejemplo %Proyecto%
         isAuth();
-        // expira();
+        expira();
         if(isset($_GET['filtro']))
         {
             
@@ -509,7 +509,7 @@ class AdminController{
     {
         //Para mostrar toda la informacion de las tareas y poder modificarlas 
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         if(isset($_GET['id'])){
             $id=$_GET['id'];
@@ -594,7 +594,7 @@ class AdminController{
         //Seccion que permite agreagar comentarios
         
         isAuth();
-        // expira();
+        expira();
         $url=($_GET['url']);
         $alertas=[];
         $tarea=Tarea::where('url',$url);
@@ -694,7 +694,7 @@ class AdminController{
     {
         //Permite visualizar los comentarios o archivos que se hayan creado en una tarea en concreto
         isAuth();
-        // expira();
+        expira();
         $url=$_GET['url'];
         $tarea=Tarea::where('url',$url);
         $id=$tarea->id;
@@ -710,7 +710,7 @@ class AdminController{
     {
         //Permite visualizar los comentarios o archivos que se hayan creado en una tarea en concreto
         isAuth();
-        // expira();
+        expira();
         $retro=new Retro();
         $retro=Retro::allFecha();
         
@@ -725,7 +725,7 @@ class AdminController{
     public static function proyectoactualizar(Router $router)
     {
         isAuth();
-        // expira();
+        expira();
         $alertas=[];
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
@@ -749,7 +749,7 @@ class AdminController{
     }
     public static function eliminarGrupo(Router $router){
         isAuth();
-        // expira();
+        expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $id=$_GET['id'];
