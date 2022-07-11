@@ -724,6 +724,8 @@ class AdminController{
     }
     public static function proyectoactualizar(Router $router)
     {
+        isAuth();
+        // expira();
         $alertas=[];
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
@@ -746,6 +748,8 @@ class AdminController{
         ]);
     }
     public static function eliminarGrupo(Router $router){
+        isAuth();
+        // expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $id=$_GET['id'];

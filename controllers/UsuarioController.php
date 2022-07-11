@@ -305,6 +305,8 @@ class UsuarioController{
     }
     public static function retro(Router $router)
     {
+        isUsuario();
+        // expira();
         if(isset($_GET['id']))
         {
             $id=$_GET['id'];

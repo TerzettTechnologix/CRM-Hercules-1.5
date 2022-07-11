@@ -683,6 +683,8 @@ class LiderController{
     }
     public static function retro(Router $router)
     {
+        isLider();
+        // expira();
         if(isset($_GET['id']))
         {
             $id=$_GET['id'];
@@ -751,6 +753,8 @@ class LiderController{
     }
     public static function proyectoactualizar(Router $router)
     {
+        isLider();
+        // expira();
         $alertas=[];
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
