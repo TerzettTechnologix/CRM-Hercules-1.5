@@ -180,7 +180,7 @@ class LiderController{
         // if($tablon->idLider!==$_SESSION['id']){
         //     header ("Location: /admin/proyectos");
         // }
-        $usuarios=Usuario::all();
+        $usuarios=Usuario::usuarioSinAdmin();
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Te recupera todas las tareas pertenecientes a ese tablon
         $usuarioTareas=new UsuarioTarea();        
@@ -515,6 +515,7 @@ class LiderController{
         // expira();
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
+            
             $url=$_GET['url'];
             $tarea=Tarea::where('url',$url);
             $urlGrupo=$tarea->IdGrupo;
@@ -523,7 +524,8 @@ class LiderController{
             $tablon=Tablon::where('id',$urlTablon);
             
             if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
-                header('Location : /lider/proyectos/tablon');
+                header ("Location: /lider/proyectos");
+                
             }else{
                 $url=$tablon->url;
                 $resultado=$tarea->eliminar();
@@ -770,7 +772,28 @@ class LiderController{
             'alertas'=>$alertas
         ]);
     }
-    
+    public static function eliminarGrupo(){
+        if($_SERVER['REQUEST_METHOD']==='POST')
+        {
+            $id=$_GET['id'];
+            $grupo=Grupo::where('id',$id);
+            $idTablon=$grupo->idTablon;
+            $tablon=Tablon::where('id',$idTablon);
+            $url=$tablon->url;
+            if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
+                
+                header ("Location: /lider/proyectos");
+                
+            }else{
+                $resultado=$grupo->eliminar();
+                if($resultado){
+                    header("Location: /lider/proyectos/tablon?url=$url&id=3");
+                } 
+            }
+                  
+            
+        }
+    }
     
     
 }

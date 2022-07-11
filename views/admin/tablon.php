@@ -195,6 +195,13 @@
                   <th scope="col"><strong>Estado</strong></th>
                   <th scope="col"><strong>Fecha de creación</strong></th>
                   <th scope="col"><strong>Acciones</strong></th>
+                  <th scrope="col">
+                    <form method="POST" action="/admin/proyectos/grupo/eliminar?id=<?php echo $grupo->id?>" class="eliminar">
+                        <button href="/admin/proyectos/grupo/eliminar?id=<?php echo $grupo->id?>" rel="tooltip" title="Eliminar Grupo" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </button>
+                    </form>
+                  </th>
                 </tr>
               </thead>
               <tbody> 
@@ -299,7 +306,29 @@
 
     });
   </script>
-
+    <script>
+$('.eliminar').submit(function(e){
+        e.preventDefault();
+        swal({
+        title: '¿Deseas eliminar?',
+        text: "¡Esta acción no se puede revertir! Se eliminaran todas las tareas con sus comentarios y archivos",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si,eliminar',
+        cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            swal(
+            'Datos Eliminados!',
+            'eliminación correcta',
+            'success'
+            )
+            this.submit();
+        
+        })
+    });    
+</script>
 </body>
 
 </html>

@@ -30,7 +30,7 @@ class Usuario extends ActiveRecord{
         $this->rol=$args['rol'] ?? null;
         $this->tipo=$args['tipo'] ?? '';
         $this->numeroempleado=$args['numeroempleado'] ?? '';
-        $this->activo=$args['activo'] ?? null;
+        $this->activo=$args['activo'] ?? '';
     }
     //Mensajes de validacion para la creacion de una cuenta
     public function validarNuevaCuenta(){

@@ -91,7 +91,8 @@ $router->get('/admin/usuario',[AdminController::class,'usuario']);
 $router->get('/admin/password',[AdminController::class,'password']);
 $router->post('/admin/password',[AdminController::class,'password']);
 
-
+//Eliminar un grupo
+$router->post('/admin/proyectos/grupo/eliminar',[AdminController::class,'eliminarGrupo']);
 
 
 //Lideres
@@ -144,6 +145,8 @@ $router->post('/lider/proyectos/tablon/eliminar',[LiderController::class,'elimin
 $router->get('/lider/proyectos/tablon/comentarios',[LiderController::class,'comentarios']);
 $router->post('/lider/proyectos/tablon/comentarios',[LiderController::class,'comentarios']);
 
+//Eliminar un grupo
+$router->post('/lider/proyectos/grupo/eliminar',[LiderController::class,'eliminarGrupo']);
 
 //Mostrar comentarios y archivos, muestra los archivos o comentarios que ha creado
 $router->get('/lider/proyectos/tablon/contenido',[LiderController::class,'contenido']);

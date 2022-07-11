@@ -59,7 +59,7 @@ class AdminController{
                     $usuario->rol="0";
                 }
                 //Crear al usuario
-                $usuario->activo=0;
+                
                 $resultado=$usuario->guardar();
 
                 if($resultado){
@@ -268,7 +268,7 @@ class AdminController{
         
         if(!$url) header ("Location: /admin/proyectos");
         $tablon=Tablon::where('url',$url);
-        $usuarios=Usuario::all();
+        $usuarios=Usuario::usuarioSinAdmin();
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
         $usuarioTareas=new UsuarioTarea();        
@@ -321,7 +321,7 @@ class AdminController{
         $tablon=Tablon::where('url',$url);
         $id=$tablon->id;
         $grupos=Grupo::belogsTo('idTablon',$id);
-        $usuarios=Usuario::all();
+        $usuarios=Usuario::usuarioSinAdmin();
         $tarea=new Tarea();
         if($_SERVER['REQUEST_METHOD']==='POST'){
             if(isset($_POST['nombre'])){ //Si tiene el nombre lo guarda en el objeto de tarea
@@ -366,7 +366,7 @@ class AdminController{
                 
                     
                 
-                $usuarios=Usuario::all();
+                $usuarios=Usuario::usuarioSinAdmin();
                 $tareas=new Tarea();
                 $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
                 $usuarioTareas=new UsuarioTarea();        
@@ -518,7 +518,7 @@ class AdminController{
             $id=4;
         }
         $url=$_GET['url'];
-        $usuarios=Usuario::all();
+        $usuarios=Usuario::usuarioSinAdmin();
         $tarea=Tarea::where('url',$url);
         $usuariostarea=UsuarioTarea::belogsTo('IdTarea',$tarea->id);
         
@@ -744,6 +744,22 @@ class AdminController{
             'tablon'=>$tablon,
             'alertas'=>$alertas
         ]);
+    }
+    public static function eliminarGrupo(Router $router){
+        if($_SERVER['REQUEST_METHOD']==='POST')
+        {
+            $id=$_GET['id'];
+            $grupo=Grupo::where('id',$id);
+            $idTablon=$grupo->idTablon;
+            $tablon=Tablon::where('id',$idTablon);
+            $url=$tablon->url;
+            $resultado=$grupo->eliminar();
+            if($resultado){
+                header("Location: /admin/proyectos/tablon?url=$url&id=3");
+                
+            }
+            
+        }
     }
 
    

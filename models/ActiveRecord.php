@@ -158,6 +158,11 @@ class ActiveRecord {
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+    public static function usuarioSinAdmin(){
+        $query="SELECT * FROM" . " usuario where rol=1 or rol=2 order by numeroempleado";
+        $resultado=self::consultarSQL($query);
+        return $resultado;
+    }
     public static function usuariosEmpleado()
     {
         $query="SELECT * FROM usuario order by numeroempleado";
