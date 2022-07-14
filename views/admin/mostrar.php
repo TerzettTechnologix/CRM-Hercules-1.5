@@ -117,7 +117,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header d-flex bd-highlight">
-              <h4 class="card-title p-2 flex-grow-1 bd-highlight">Comentarios y archivos</h4>
+            <h4 class="card-title p-2 flex-grow-1 bd-highlight">Comentarios y archivos de la tarea: <?php echo $tarea->nombre?> </h4>
               <!-- <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
               Agregar comentarios/archivos.
             </a> -->

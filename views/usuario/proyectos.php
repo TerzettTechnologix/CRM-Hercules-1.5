@@ -141,7 +141,7 @@
               <h4 class="card-title">Proyectos</h4> 
             </div>
         <?php if(empty($tablones)) {?>
-            <p class="text-center">No hay tablones con estos parametros o no has creado alguno aun</p>
+            <p class="text-center">No hay tablones con estos parametros o no te han incluido en alguno aun</p>
 
         <?php } ?>
           <?php foreach($tablones as $tablon) {?>

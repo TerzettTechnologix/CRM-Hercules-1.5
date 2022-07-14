@@ -714,7 +714,8 @@ class AdminController{
         
         
         $router->render('admin/mostrar',[
-            'comentarios'=>$comentarios
+            'comentarios'=>$comentarios,
+            'tarea'=>$tarea
             
         ]);
     }

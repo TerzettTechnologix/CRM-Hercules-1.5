@@ -118,7 +118,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Conversación de proyecto</h4>
+              <h4 class="card-title">Conversación de tarea : <?php echo $tarea->nombre; ?></h4>
             </div>
             <?php
               include_once __DIR__."/../templates/alertas.php";

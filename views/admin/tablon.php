@@ -162,7 +162,7 @@
               <label for="nombre" class="form-label">Nombre de la tarea: (Maximo 20 caracteres) </label>
               <input type="text" class="form-control" id="nombre" placeholder="Nombre de la tarea" name="nombre" >
               </div>
-              <label for="exampleFormControlInput1" class="form-label">Para el grupo: (</label>
+              <label for="exampleFormControlInput1" class="form-label">Para el grupo: </label>
               <select class="form-select" aria-label="Default select example" name="grupo">
                   <option selected="true" disabled="disabled">Selecciona el grupo al que le quieres agregar la tarea</option>
                   <?php foreach($grupos as $grupo) {?>

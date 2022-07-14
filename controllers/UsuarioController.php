@@ -299,7 +299,8 @@ class UsuarioController{
         $comentarios=Comentario::belogsToOrdenado('IdTarea',$id);
         
         $router->render('usuario/mostrar',[
-            'comentarios'=>$comentarios
+            'comentarios'=>$comentarios,
+            'tarea'=>$tarea
             
         ]);
     }

@@ -694,7 +694,8 @@ class LiderController{
         $comentarios=Comentario::belogsToOrdenado('IdTarea',$id);
         
         $router->render('lider/mostrar',[
-            'comentarios'=>$comentarios
+            'comentarios'=>$comentarios,
+            'tarea'=>$tarea
             
         ]);
     }
