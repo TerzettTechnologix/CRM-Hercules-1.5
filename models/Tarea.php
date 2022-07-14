@@ -29,6 +29,9 @@ class Tarea extends ActiveRecord{
         if(!$this->IdGrupo){
             self::$alertas['error'][]="El grupo es obligatorio";
         }
+        if(strlen($this->nombre) >= 21){
+            self::$alertas['error'][]="El nombre de la tarea no puede ser mayor a 20 caracteres";
+        }
         return self::$alertas;
     }
     

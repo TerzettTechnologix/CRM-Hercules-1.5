@@ -160,7 +160,7 @@
             <div class="container">
                 <div class="card card-body">
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre del tablón</label>
+                    <label for="nombre" class="form-label">Nombre del tablón (Maximo 35 caracteres)</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo ($tablon->nombre) ?>">
                 </div>
                 <div class="mb-3">

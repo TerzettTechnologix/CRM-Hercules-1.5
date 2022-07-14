@@ -118,6 +118,7 @@ class AdminController{
         $url=$_GET['url'];
         $url1=$url;
         $tablon=Tablon::where('url',$url);
+        $grupos=Grupo::belogsToAsc('idTablon',$tablon->id);
         $grupo=new Grupo();
         if($_SERVER['REQUEST_METHOD']==='POST'){
             $grupo->sincronizar($_POST);
@@ -131,10 +132,20 @@ class AdminController{
                 }
             }
         }
+        $usuarios=Usuario::usuarioSinAdmin();
+        $tareas=new Tarea();
+        $tareas=$tareas->tareasRecuperar($tablon->id);
+        $usuarioTareas=new UsuarioTarea();
+        $usuarioTareas=$usuarioTareas->usuariosTareas($tablon->id);
         $router->render('admin/tablon',[
             'tablon'=>$tablon,
             'alertas'=>$alertas,
-            'resultado'=>$id
+            'resultado'=>$id,
+            'grupos'=>$grupos,
+            'tareas'=>$tareas,
+            'usuarios'=>$usuarios,
+            'usuarioTareas'=>$usuarioTareas,
+            'grupo'=>$grupo
         ]);
        
     }
@@ -166,7 +177,7 @@ class AdminController{
             $url=$_GET['url'];
             $tablon=Tablon::where('url',$url); //Primero encuentra el tablon que se va a eliminar
             $id=$tablon->id;
-            $grupos=Grupo::belogsTo('idTablon',$id); //Te regresa todos los grupos de ese tablon
+            $grupos=Grupo::belogsToAsc('idTablon',$id); //Te regresa todos los grupos de ese tablon
             $tareas=new Tarea();
             $tareas=$tareas->tareasRecuperar($tablon->id);  //Te regresa todas las tareas de ese tablon
             $usuarioTareas=new UsuarioTarea();        
@@ -264,7 +275,7 @@ class AdminController{
         $tablon=Tablon::where('url',$url);
         $idTablon=$tablon->id;
        
-        $grupos=Grupo::belogsTo('idTablon',$idTablon); // Obtienes todos los tablones pertenecientes a un grupo
+        $grupos=Grupo::belogsToAsc('idTablon',$idTablon); // Obtienes todos los tablones pertenecientes a un grupo
         
         if(!$url) header ("Location: /admin/proyectos");
         $tablon=Tablon::where('url',$url);
@@ -320,7 +331,7 @@ class AdminController{
         $url1=$url;
         $tablon=Tablon::where('url',$url);
         $id=$tablon->id;
-        $grupos=Grupo::belogsTo('idTablon',$id);
+        $grupos=Grupo::belogsToAsc('idTablon',$id);
         $usuarios=Usuario::usuarioSinAdmin();
         $tarea=new Tarea();
         if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -401,7 +412,8 @@ class AdminController{
             'resultado'=>$idUsuario,
             'usuarios'=>$usuarios,
             'tareas'=>$tareas,
-            'usuarioTareas'=>$usuarioTareas
+            'usuarioTareas'=>$usuarioTareas,
+            'tarea'=>$tarea
             
         ]);
         
@@ -473,7 +485,7 @@ class AdminController{
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
         $id=$tablon->id;
-        $grupos=Grupo::belogsTo('idTablon',$id);
+        $grupos=Grupo::belogsToAsc('idTablon',$id);
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
         $usuarioTareas=new UsuarioTarea();        
@@ -713,9 +725,6 @@ class AdminController{
         expira();
         $retro=new Retro();
         $retro=Retro::allFecha();
-        
-        
-        
         $router->render('admin/retro',[
             // 'comentarios'=>$comentarios
             'retros'=>$retro

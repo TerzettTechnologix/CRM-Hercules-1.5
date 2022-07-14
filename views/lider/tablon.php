@@ -137,8 +137,8 @@
               <div class="collapse" id="collapseGrupos">
                   <div class="card card-body">
               <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre del grupo:</label>
-                <input type="text" class="form-control" id="nombre" placeholder="Nombre del grupo" name="nombre">
+                <label for="nombre" class="form-label">Nombre del grupo: (Maximo 20 caracteres)</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre del grupo" name="nombre" value="<?php if(!empty($grupo)) echo $grupo->nombre ?>">
               </div>
               <button type="submit" class="btn btn-primary">Guardar</button>
                   </div>
@@ -152,14 +152,14 @@
               <div class="collapse" id="collapseTareas">
                   <div class="card card-body">
               <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre de la tarea:</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre de la tarea" name="nombre">
+              <label for="nombre" class="form-label">Nombre de la tarea: (Maximo 20 caracteres)</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre de la tarea" name="nombre" value="<?php if(!empty($tarea)) echo $tarea->nombre ?>">
               </div>
               <label for="exampleFormControlInput1" class="form-label">Para el grupo:</label>
               <select class="form-select" aria-label="Default select example" name="grupo">
                   <option selected="true" disabled="disabled">Selecciona el grupo al que le quieres agregar la tarea</option>
                   <?php foreach($grupos as $grupo) {?>
-                    <option value="<?php echo $grupo->id?>"><?php echo $grupo->nombre; ?></option>
+                    <option value="<?php echo $grupo->id?>"><?php echo $grupo->nombre ?></option>
                   <?php }?>
                 </select>
                 <br>
@@ -167,7 +167,8 @@
               <div class="container-lg col-md-2 ">
               <?php foreach($usuarios as $usuario) {?>
                 <ul class=" list-group-horizontal"> 
-                <li class="list-group-item"><input class="form-check-input " type="checkbox" value="<?php echo $usuario->id;?>" id="usuario" name='CheckBox[]'>
+                <li class="list-group-item">
+                <input class="form-check-input " type="checkbox" value="<?php echo $usuario->id?>" <?php  if ($usuario->activo===1) echo 'checked '?> id="usuario" name='CheckBox[]'>
               <label class="form-check-label" for="usuario"><?php echo $usuario->nombre; ?></label> </li> 
                </ul> 
               <?php }?>

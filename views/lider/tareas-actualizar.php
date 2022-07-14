@@ -123,7 +123,7 @@
                 ?> 
                 <form action="/lider/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url ?>" method="POST">
                     <div class="form-group">
-                        <label for="nombre">Nombre del proyecto</label>
+                        <label for="nombre">Nombre del proyecto (Maximo 20 caracteres)</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo s($tarea->nombre) ?>">
                       </div>
                     <div class="form-group">

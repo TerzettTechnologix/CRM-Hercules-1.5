@@ -68,7 +68,14 @@ class ActiveRecord {
     }
     public static function belogsTo($columna,$valor)
     {
-        $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}' order by id desc";
+        $resultado = self::consultarSQL($query);
+        
+        return $resultado;
+    }
+    public static function belogsToAsc($columna,$valor)
+    {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}' order by id asc";
         $resultado = self::consultarSQL($query);
         
         return $resultado;
@@ -141,12 +148,7 @@ class ActiveRecord {
             
         } else {
             // Creando un nuevo registro
-            $resultado = $this->crear();
-            
-            
-            
-            
-            
+            $resultado = $this->crear();    
         }
         
         return $resultado;
@@ -171,7 +173,7 @@ class ActiveRecord {
     }
     public static function allFecha()
     {
-        $query="SELECT * FROM"  ." ". static::$tabla ." " ."ORDER BY fecha asc";
+        $query="SELECT * FROM"  ." ". static::$tabla ." " ."ORDER BY fecha desc";
         $resultado = self::consultarSQL($query);
         
         return $resultado;
@@ -258,7 +260,7 @@ class ActiveRecord {
         $query .= " ) VALUES ('"; 
         $query .= join("', '", array_values($atributos));
         $query .= "') ";
-        // debuguear($query);
+        
         // Resultado de la consulta
         $resultado = self::$db->query($query);
         return [
@@ -269,7 +271,7 @@ class ActiveRecord {
     //Buscar una tablon por titulo con el boton search
     public function buscarPalabra($palabra)
     {
-        $query="SELECT * FROM tablon where nombre LIKE '%$palabra%' ";
+        $query="SELECT * FROM tablon where nombre LIKE '%$palabra%' order by id desc ";
         
         $resultado = self::consultarSQL($query);
         return $resultado;

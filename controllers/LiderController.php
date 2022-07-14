@@ -175,7 +175,7 @@ class LiderController{
         }
         $idTablon=$tablon->id;
 
-        $grupos=Grupo::belogsTo('idTablon',$idTablon);
+        $grupos=Grupo::belogsToAsc('idTablon',$idTablon);
         $tablon=Tablon::where('url',$url);
         // if($tablon->idLider!==$_SESSION['id']){
         //     header ("Location: /admin/proyectos");
@@ -202,6 +202,8 @@ class LiderController{
             $grupo->guardar();   
         }
         // debuguear($grupo);
+        $usuarios=new Usuario;
+        $usuarios=Usuario::usuarioSinAdmin();
         $router->render('lider/tablon',[
             'tablon'=>$tablon,
             'alertas'=>$alertas,
@@ -221,7 +223,7 @@ class LiderController{
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
         $id=$tablon->id;
-        $grupos=Grupo::belogsTo('idTablon',$id);
+        $grupos=Grupo::belogsToAsc('idTablon',$id);
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
         $usuarioTareas=new UsuarioTarea();        
@@ -239,7 +241,7 @@ class LiderController{
             $url=$_GET['url'];
             $tablon=Tablon::where('url',$url);
             $id=$tablon->id;
-            $grupos=Grupo::belogsTo('idTablon',$id);
+            $grupos=Grupo::belogsToAsc('idTablon',$id);
             $tareas=new Tarea();
             $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
             $usuarioTareas=new UsuarioTarea();
@@ -264,9 +266,9 @@ class LiderController{
     public static function grupo(Router $router)
     {
         //Crear un grupo dentro de un tablon
-        
         isLider();
         expira();
+        
         // if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
         //     header("Location: /lider/proyectos");
         // }
@@ -281,11 +283,12 @@ class LiderController{
         $url=$_GET['url'];
         $url1=$url;
         $tablon=Tablon::where('url',$url);
-        $grupos=Grupo::belogsTo('idTablon',$tablon->id);
+        $grupos=Grupo::belogsToAsc('idTablon',$tablon->id);
         $grupo=new Grupo();
         if($_SERVER['REQUEST_METHOD']==='POST'){
             $grupo->sincronizar($_POST);
             $alertas=$grupo->validarGrupo();
+            
             if(empty($alertas))
             {
                 
@@ -295,14 +298,6 @@ class LiderController{
                     
                 }
                 $resultado=$grupo->guardar();
-                $tarea=new Tarea();
-                $tarea->nombre="Default";
-                $tarea->IdGrupo=$grupo->id;
-                $tarea->estado='0';
-                $tarea->fecha=date('d-m-Y');
-                $hash=md5(uniqid());
-                $tarea->url=$hash;
-                
                 // $resultado=$tarea->guardar();
                 // debuguear($resultado);
                 
@@ -312,11 +307,20 @@ class LiderController{
                 }
             }
         }
+        $usuarios=Usuario::usuarioSinAdmin();
+        $tareas=new Tarea();
+        $tareas=$tareas->tareasRecuperar($tablon->id);
+        $usuarioTareas=new UsuarioTarea();
+        $usuarioTareas=$usuarioTareas->usuariosTareas($tablon->id);
         $router->render('lider/tablon',[
             'tablon'=>$tablon,
             'alertas'=>$alertas,
             'resultado'=>$id,
-            'grupos'=>$grupos
+            'grupos'=>$grupos,
+            'tareas'=>$tareas,
+            'usuarios'=>$usuarios,
+            'usuarioTareas'=>$usuarioTareas,
+            'grupo'=>$grupo
         ]);
        
     }
@@ -339,8 +343,8 @@ class LiderController{
         //     header("Location: /lider/proyectos");
         // }
         $id=$tablon->id;
-        $grupos=Grupo::belogsTo('idTablon',$id);
-        $usuarios=Usuario::all();
+        $grupos=Grupo::belogsToAsc('idTablon',$id);
+        $usuarios=Usuario::usuarioSinAdmin();
         $tarea=new Tarea();
         if($_SERVER['REQUEST_METHOD']==='POST'){
             if(isset($_POST['nombre'])){ //Obtener todos los datos de la tarea que se va a crear en este caso el nombre
@@ -352,6 +356,7 @@ class LiderController{
             if(isset($_POST['grupo'])){
                 $IdGrupo=$_POST['grupo'];
                 $tarea->IdGrupo=$IdGrupo;
+                
                 
             }else{
                 $IdGrupo='';
@@ -382,7 +387,7 @@ class LiderController{
                     $usuariotarea->crearVarios();
                 }
                 
-                $usuarios=Usuario::all();
+                $usuarios=Usuario::usuarioSinAdmin();
                 $tareas=new Tarea();
                 $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
                 $usuarioTareas=new UsuarioTarea();        
@@ -409,7 +414,9 @@ class LiderController{
             $usuarioTareas=new UsuarioTarea();        
             $usuarioTareas=$usuarioTareas->usuariosTareas($tablon->id);
             
+            
         }
+        
         $router->render('lider/tablon',[
             'grupos'=>$grupos,
             'tablon'=>$tablon,
@@ -417,7 +424,9 @@ class LiderController{
             'resultado'=>$idUsuario,
             'usuarios'=>$usuarios,
             'tareas'=>$tareas,
-            'usuarioTareas'=>$usuarioTareas
+            'usuarioTareas'=>$usuarioTareas,
+            'tarea'=>$tarea,
+            
             
         ]);
         
@@ -435,7 +444,7 @@ class LiderController{
             $id=4;
         }
         $url=$_GET['url'];
-        $usuarios=Usuario::all();
+        $usuarios=Usuario::usuarioSinAdmin();
         $tarea=Tarea::where('url',$url);
         $idGrupo=$tarea->IdGrupo;
         $grupo=Grupo::where('id',$idGrupo);
@@ -459,43 +468,51 @@ class LiderController{
         {
             $tarea=Tarea::where('url',$_GET['url']);
             $tarea->sincronizar($_POST);
+            $alertas=$tarea->validarTarea();
+            if(!isset($_POST['CheckBox']))
+            {
+                $alertas['error'][]="Debe seleccionar al menos un usuario para la tarea creada";
+            }
             $idGrupo=$tarea->IdGrupo;
             $grupo=Grupo::where('id',$idGrupo);
             $url=$grupo->idTablon;
             $tablon=Tablon::where('id',$url);
-            $resultado=$tarea->guardar();
-            $id=$tarea->id;
-            $usuariotarea->EliminarRegistro($id);
-            $usuariosSeleccionados=array(); //Crea un array con los usuarios que se han seleccionado en el checkbox
-            $usuariosSeleccionados=$_POST['CheckBox']; //Obtienes todos los valores que se encuentran en el checkbox
-            $longitud=sizeof($usuariosSeleccionados); //Obtiene el total de usuarios que se encuentran seleccioandos 
-            for($i=0;$i<$longitud;$i++) //Hace el recorrido para cada uno de los usuarios  y crea un nuevo objeto de Usuario Tarea donde registra a cada uno con la tarea correspondiente
+            if(empty($alertas))
             {
+                $resultado=$tarea->guardar();
+                $id=$tarea->id;
                 $usuariotarea=new UsuarioTarea();
-                $usuariotarea->IdTarea=$id; //Guarda el id de la tarea
-                $usuariotarea->IdUsuario=$usuariosSeleccionados[$i]; //Guarda el id del usuario
-                $usuariotarea->crearVarios();
-            }
-            if($resultado) //Actualiza la tabla de grupo con los cambios correspondientes a las tarea
-            {
-                
-                $grupo=Grupo::where('id',$grupo->id);
-                $grupo->total=$grupo->total($grupo->id);
-                if($grupo->total==0)
+                $usuariotarea->EliminarRegistro($id);
+                $usuariosSeleccionados=array(); //Crea un array con los usuarios que se han seleccionado en el checkbox
+                $usuariosSeleccionados=$_POST['CheckBox']; //Obtienes todos los valores que se encuentran en el checkbox
+                $longitud=sizeof($usuariosSeleccionados); //Obtiene el total de usuarios que se encuentran seleccioandos 
+                for($i=0;$i<$longitud;$i++) //Hace el recorrido para cada uno de los usuarios  y crea un nuevo objeto de Usuario Tarea donde registra a cada uno con la tarea correspondiente
                 {
-                    $grupo->total=1;
+                    $usuariotarea=new UsuarioTarea();
+                    $usuariotarea->IdTarea=$id; //Guarda el id de la tarea
+                    $usuariotarea->IdUsuario=$usuariosSeleccionados[$i]; //Guarda el id del usuario
+                    $usuariotarea->crearVarios();
                 }
-                $grupo->nuevas=$grupo->estado($grupo->id,0);
-                $grupo->estancadas=$grupo->estado($grupo->id,1);
-                $grupo->proceso=$grupo->estado($grupo->id,2);
-                $grupo->listas=$grupo->estado($grupo->id,3);
-                $grupo->guardar();
-                $url=$grupo->idTablon;
-                $tablon=Tablon::where('id',$url);
-                $url=$tablon->url;
-                header("Location: /lider/proyectos/tablon?url=$url&id=2");
+                if($resultado) //Actualiza la tabla de grupo con los cambios correspondientes a las tarea
+                {
+                    
+                    $grupo=Grupo::where('id',$grupo->id);
+                    $grupo->total=$grupo->total($grupo->id);
+                    if($grupo->total==0)
+                    {
+                        $grupo->total=1;
+                    }
+                    $grupo->nuevas=$grupo->estado($grupo->id,0);
+                    $grupo->estancadas=$grupo->estado($grupo->id,1);
+                    $grupo->proceso=$grupo->estado($grupo->id,2);
+                    $grupo->listas=$grupo->estado($grupo->id,3);
+                    $grupo->guardar();
+                    $url=$grupo->idTablon;
+                    $tablon=Tablon::where('id',$url);
+                    $url=$tablon->url;
+                    header("Location: /lider/proyectos/tablon?url=$url&id=2");
+                }
             }
-
         }
         
         $router->render('lider/tareas-actualizar',[

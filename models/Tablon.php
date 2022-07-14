@@ -33,6 +33,9 @@ class Tablon extends ActiveRecord{
         if(!$this->descripcion){
             self::$alertas['error'][]="La descripcion obligatoria";
         }
+        if(strlen($this->nombre) > 36){
+            self::$alertas['error'][]="El nombre no puede ser mayor a 35 caracteres";
+        }
         
         
         return self::$alertas;

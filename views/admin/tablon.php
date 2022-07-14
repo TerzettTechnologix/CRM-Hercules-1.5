@@ -138,13 +138,14 @@
               <p class="alert alert-success text-white font-weight-bold text-center text-uppercase"><?php echo s($mensaje); ?></p>
             <?php } 
           ?>
+        
         <form method="POST" action="/admin/proyectos/grupo?url=<?php echo $tablon->url?>">
           <div class="container">
               <div class="collapse" id="collapseGrupos">
                   <div class="card card-body">
               <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre del grupo:</label>
-                <input type="text" class="form-control" id="nombre" placeholder="Nombre del grupo" name="nombre">
+                <label for="nombre" class="form-label">Nombre del grupo: (Maximo 20 caracteres)</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre del grupo" name="nombre" value="<?php if(!empty($grupo)) echo $grupo->nombre ?>">
               </div>
               <button type="submit" class="btn btn-primary">Guardar</button>
                   </div>
@@ -158,10 +159,10 @@
               <div class="collapse" id="collapseTareas">
                   <div class="card card-body">
               <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre de la tarea:</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre de la tarea" name="nombre">
+              <label for="nombre" class="form-label">Nombre de la tarea: (Maximo 20 caracteres) </label>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre de la tarea" name="nombre" >
               </div>
-              <label for="exampleFormControlInput1" class="form-label">Para el grupo:</label>
+              <label for="exampleFormControlInput1" class="form-label">Para el grupo: (</label>
               <select class="form-select" aria-label="Default select example" name="grupo">
                   <option selected="true" disabled="disabled">Selecciona el grupo al que le quieres agregar la tarea</option>
                   <?php foreach($grupos as $grupo) {?>

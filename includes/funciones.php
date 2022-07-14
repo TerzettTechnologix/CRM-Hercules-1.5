@@ -101,7 +101,7 @@ function crearPDF($tablon,$grupos,$tareas,$usuarioTareas)
     $pdf->SetDrawColor(61,61,61);
     foreach($grupos as $grupo){
         $pdf->setX(1);
-        $pdf->Cell(60,8,utf8_decode($grupo->nombre),1,0,'C',0);
+        $pdf->Cell(70,8,utf8_decode($grupo->nombre),1,0,'C',0);
         $pdf->Cell(60,8,'Personas',1,0,'C',0);
         $pdf->Cell(40,8,'Estado',1,0,'C',0);
         $pdf->Cell(45,8,'Fecha',1,1,'C',0);
@@ -112,10 +112,10 @@ function crearPDF($tablon,$grupos,$tareas,$usuarioTareas)
             if($tarea->IdGrupo==$grupo->id)
             {
                 $pdf->setX(1);
-                $pdf->Cell(65,8,utf8_decode($tarea->nombre),0,0,'C',0);
+                $pdf->Cell(70,8,utf8_decode($tarea->nombre),0,0,'C',0);
                 foreach($usuarioTareas as $usuarioTarea)
                 {
-                    $pdf->setX(60);
+                    $pdf->setX(70);
                     if($tarea->id==$usuarioTarea->IdTarea)
                     {
                         $pdf->Cell(60,8,utf8_decode($usuarioTarea->nombre),0,1,'C',0);
@@ -125,7 +125,7 @@ function crearPDF($tablon,$grupos,$tareas,$usuarioTareas)
                     
 
                 }
-                $pdf->setX(120);
+                $pdf->setX(132);
                 if($tarea->estado=='0')
                 {
                     $pdf->Cell(40,-8,"Nueva",0,0,'C',0);
@@ -139,7 +139,7 @@ function crearPDF($tablon,$grupos,$tareas,$usuarioTareas)
                 {
                     $pdf->Cell(40,-8,"Lista",0,0,'C',0);
                 }
-                $pdf->setX(160);
+                $pdf->setX(170);
                 $pdf->Cell(45,-8,$tarea->fecha,0,0,'C',0);
             }
             
