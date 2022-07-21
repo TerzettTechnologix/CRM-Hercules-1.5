@@ -219,7 +219,6 @@
                       <td><?php echo $tarea->estado ?></td>
                       
                       <td class="text-center"><?php echo $tarea->fecha ?></td>
-                      <td><button></button></td>
                       <td>
                       <div class="d-flex align-items-center">
                       <a href="/lider/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url?>" rel="tooltip" title="Actualizar información" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
