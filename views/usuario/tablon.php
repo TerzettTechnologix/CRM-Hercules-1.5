@@ -130,49 +130,50 @@
           ?>
         <?php foreach($grupos as $grupo){ ?>         
           <div class="container">
-          <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col"><?php echo $grupo->nombre ?></th>
-                  <th scope="col">PERSONAS</th>
-                  <th scope="col">ESTADO</th>
-                  <th scope="col">FECHA DE CREACION</th>
-                  <th scope="col">ACCIONES</th>
-                </tr>
-              </thead>
-              <tbody> 
-                <?php foreach($tareas as $tarea) { ?>
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
                   <tr>
-                      <?php if($tarea->IdGrupo==$grupo->id) { ?>
-                      <th scope="row"><?php echo $tarea->nombre ?></th>  
+                    <th scope="col"><?php echo $grupo->nombre ?></th>
+                    <th scope="col">PERSONAS</th>
+                    <th scope="col">ESTADO</th>
+                    <th scope="col">FECHA DE CREACION</th>
+                    <th scope="col">ACCIONES</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                  <?php foreach($tareas as $tarea) { ?>
+                    <tr>
+                        <?php if($tarea->IdGrupo==$grupo->id) { ?>
+                        <th scope="row"><?php echo $tarea->nombre ?></th>  
+                          <td>
+                            <?php foreach($usuarioTareas as $usuarioTarea) { ?>
+                              
+                              <?php if($tarea->id==$usuarioTarea->IdTarea) echo $usuarioTarea->nombre . '<br>'  ?>
+                              
+                              <?php } ?>
+    
+                          </td>
+                        <?php if($tarea->estado=='0') $tarea->estado="Nueva" ?>
+                        <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
+                        <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
+                        <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
+                        <td><?php echo $tarea->estado ?></td>
+                        
+                        <td class="text-center"><?php echo $tarea->fecha ?></td> 
                         <td>
-                          <?php foreach($usuarioTareas as $usuarioTarea) { ?>
-                            
-                            <?php if($tarea->id==$usuarioTarea->IdTarea) echo $usuarioTarea->nombre . '<br>'  ?>
-                            
-                            <?php } ?>
-  
+                        <a href="/usuario/proyectos/tablon/comentarios?url=<?php echo $tarea->url?>" rel="tooltip" title="Agregar comentarios-complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
+                              <i class="now-ui-icons ui-1_simple-add"></i>
+                            </a>
+                          <a href="/usuario/proyectos/tablon/contenido?url=<?php echo $tarea->url?>" rel="tooltip" title="Visualizar complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
+                              <i class="now-ui-icons design_bullet-list-67"></i>
+                            </a>
                         </td>
-                      <?php if($tarea->estado=='0') $tarea->estado="Nueva" ?>
-                      <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
-                      <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
-                      <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
-                      <td><?php echo $tarea->estado ?></td>
-                      
-                      <td class="text-center"><?php echo $tarea->fecha ?></td> 
-                      <td>
-                      <a href="/usuario/proyectos/tablon/comentarios?url=<?php echo $tarea->url?>" rel="tooltip" title="Agregar comentarios-complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
-                            <i class="now-ui-icons ui-1_simple-add"></i>
-                          </a>
-                        <a href="/usuario/proyectos/tablon/contenido?url=<?php echo $tarea->url?>" rel="tooltip" title="Visualizar complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
-                            <i class="now-ui-icons design_bullet-list-67"></i>
-                          </a>
-                      </td>
-                    </tr>
-                    <?php } ?>
-                <?php } ?>
-              </tbody>
-            </table>
+                      </tr>
+                      <?php } ?>
+                  <?php } ?>
+                </tbody>
+              </table>
             <div class="progress">
                       <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo ($grupo->nuevas/$grupo->total) *100  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." ". round(($grupo->nuevas/$grupo->total),2)  *100 ." " ."%" ?></div>
                       <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: <?php echo ($grupo->proceso/$grupo->total) *100  ?>%"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><?php echo "Proceso" ." ". round(($grupo->proceso/$grupo->total),2) *100 ." " ."%" ?></div>

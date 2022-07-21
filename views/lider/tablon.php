@@ -181,68 +181,68 @@
         </div>
         <div class="container">
         <?php foreach($grupos as $grupo){ ?>         
-          
-          <table class="table">
-              <thead>
-                <tr>
-                  <th class="text-primary" scope="col"><?php echo $grupo->nombre ?></th>
-                  <th scope="col"><strong>Asignación</strong></th>
-                  <th scope="col"><strong>Estado</strong></th>
-                  <th scope="col"><strong>Fecha de creación</strong></th>
-                  <th scope="col"><strong>Acciones</strong></th>
-                  <th scope="col">
-                    <form method="POST" action="/lider/proyectos/grupo/eliminar?id=<?php echo $grupo->id?>" class="eliminar">
-                      <button href="/lider/proyectos/grupo/eliminar?id=<?php echo $grupo->id?>" rel="tooltip" title="Eliminar Grupo" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
-                          <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
-                    </form>
-                  </th>
-                </tr>
-              </thead>
-              <tbody> 
-                <?php foreach($tareas as $tarea) { ?>
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
                   <tr>
-                      <?php if($tarea->IdGrupo==$grupo->id) { ?>
-                      <th scope="row"><?php echo $tarea->nombre ?></th>  
-                        <td>
-                          <?php foreach($usuarioTareas as $usuarioTarea) { ?>
-                            
-                            <?php if($tarea->id==$usuarioTarea->IdTarea) echo $usuarioTarea->nombre . '<br>'  ?>
-                            
-                            <?php } ?>
-  
-                        </td>
-                      <?php if($tarea->estado=='0') $tarea->estado="Nueva" ?>
-                      <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
-                      <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
-                      <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
-                      <td><?php echo $tarea->estado ?></td>
-                      
-                      <td class="text-center"><?php echo $tarea->fecha ?></td>
-                      <td>
-                      <div class="d-flex align-items-center">
-                      <a href="/lider/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url?>" rel="tooltip" title="Actualizar información" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
-                            <i class="now-ui-icons design-2_ruler-pencil"></i>
-                        </a>
-                        <form method="POST" action="/lider/proyectos/tablon/eliminar?url=<?php echo $tarea->url?>">
-                          <button href="/lider/proyectos/tablon/eliminar?url=<?php echo $tarea->url?>" rel="tooltip" title="Eliminar tarea" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
-                              <i class="now-ui-icons ui-1_simple-remove"></i>
-                          </button>
-                        </form>
+                    <th class="text-primary" scope="col"><?php echo $grupo->nombre ?></th>
+                    <th scope="col"><strong>Asignación</strong></th>
+                    <th scope="col"><strong>Estado</strong></th>
+                    <th scope="col"><strong>Fecha de creación</strong></th>
+                    <th scope="col"><strong>Acciones</strong></th>
+                    <th scope="col">
+                      <form method="POST" action="/lider/proyectos/grupo/eliminar?id=<?php echo $grupo->id?>" class="eliminar">
+                        <button href="/lider/proyectos/grupo/eliminar?id=<?php echo $grupo->id?>" rel="tooltip" title="Eliminar Grupo" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </button>
+                      </form>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody> 
+                  <?php foreach($tareas as $tarea) { ?>
+                    <tr>
+                        <?php if($tarea->IdGrupo==$grupo->id) { ?>
+                        <th scope="row"><?php echo $tarea->nombre ?></th>  
+                          <td>
+                            <?php foreach($usuarioTareas as $usuarioTarea) { ?>
+                              
+                              <?php if($tarea->id==$usuarioTarea->IdTarea) echo $usuarioTarea->nombre . '<br>'  ?>
+                              
+                              <?php } ?>
+    
+                          </td>
+                        <?php if($tarea->estado=='0') $tarea->estado="Nueva" ?>
+                        <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
+                        <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
+                        <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
+                        <td><?php echo $tarea->estado ?></td>
                         
-                        <a href="/lider/proyectos/tablon/comentarios?url=<?php echo $tarea->url?>" rel="tooltip" title="Agregar comentarios-complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
-                            <i class="now-ui-icons ui-1_simple-add"></i>
+                        <td class="text-center"><?php echo $tarea->fecha ?></td>
+                        <td>
+                        <div class="d-flex align-items-center">
+                        <a href="/lider/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url?>" rel="tooltip" title="Actualizar información" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
+                              <i class="now-ui-icons design-2_ruler-pencil"></i>
                           </a>
-                        <a href="/lider/proyectos/tablon/contenido?url=<?php echo $tarea->url?>" rel="tooltip" title="Visualizar complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
-                            <i class="now-ui-icons design_bullet-list-67"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <?php } ?>
-                <?php } ?>
-              </tbody>
-            </table>
+                          <form method="POST" action="/lider/proyectos/tablon/eliminar?url=<?php echo $tarea->url?>">
+                            <button href="/lider/proyectos/tablon/eliminar?url=<?php echo $tarea->url?>" rel="tooltip" title="Eliminar tarea" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                          </form>
+                          
+                          <a href="/lider/proyectos/tablon/comentarios?url=<?php echo $tarea->url?>" rel="tooltip" title="Agregar comentarios-complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
+                              <i class="now-ui-icons ui-1_simple-add"></i>
+                            </a>
+                          <a href="/lider/proyectos/tablon/contenido?url=<?php echo $tarea->url?>" rel="tooltip" title="Visualizar complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret">
+                              <i class="now-ui-icons design_bullet-list-67"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <?php } ?>
+                  <?php } ?>
+                </tbody>
+              </table>
             <div class="progress">
               <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo ($grupo->nuevas/$grupo->total) *100  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." ". round(($grupo->nuevas/$grupo->total),2)  *100 ." " ."%" ?></div>
               <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: <?php echo ($grupo->proceso/$grupo->total) *100  ?>%"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><?php echo "Proceso" ." ". round(($grupo->proceso/$grupo->total),2) *100 ." " ."%" ?></div>
