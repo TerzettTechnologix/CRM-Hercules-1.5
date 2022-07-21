@@ -278,7 +278,8 @@ class UsuarioController{
         }
         $router->render('usuario/comentarios',[
             'tarea'=>$tarea,
-            'alertas'=>$alertas
+            'alertas'=>$alertas,
+            'url'=>$url
             
         ]);
     }
@@ -295,12 +296,18 @@ class UsuarioController{
         //     header("Location: /usuario/proyectos/tablon?url=$url");
         // }
         $tarea=Tarea::where('url',$url);
+        $IdGrupo=$tarea->IdGrupo;
+        $grupo=Grupo::where('id',$IdGrupo);
+        $idTablon=$grupo->idTablon;
+        $tablon=Tablon::where('id',$idTablon);
+        $url=$tablon->url;
         $id=$tarea->id;
         $comentarios=Comentario::belogsToOrdenado('IdTarea',$id);
         
         $router->render('usuario/mostrar',[
             'comentarios'=>$comentarios,
-            'tarea'=>$tarea
+            'tarea'=>$tarea,
+            'url'=>$url
             
         ]);
     }

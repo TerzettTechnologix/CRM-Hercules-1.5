@@ -450,6 +450,7 @@ class LiderController{
         $grupo=Grupo::where('id',$idGrupo);
         $url=$grupo->idTablon;
         $tablon=Tablon::where('id',$url);
+        $url=$tablon->url;
         // if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
         //     header("Location: /lider/proyectos");
         // }
@@ -521,7 +522,8 @@ class LiderController{
             'usuarios'=>$usuarios,
             'usuariostarea'=>$usuariostarea,
             'alertas'=>$alertas,
-            'resultado'=>$id
+            'resultado'=>$id,
+            'url'=>$url
             
         ]);
     }
@@ -673,7 +675,8 @@ class LiderController{
         }
         $router->render('lider/comentarios',[
             'tarea'=>$tarea,
-            'alertas'=>$alertas
+            'alertas'=>$alertas,
+            'url'=>$url
             
         ]);
     }
@@ -690,12 +693,18 @@ class LiderController{
             header("Location: /lider/proyectos/tablon?url=$url");
         }
         $tarea=Tarea::where('url',$url);
+        $IdGrupo=$tarea->IdGrupo;
+        $grupo=Grupo::where('id',$IdGrupo);
+        $idTablon=$grupo->idTablon;
+        $tablon=Tablon::where('id',$idTablon);
+        $url=$tablon->url;
         $id=$tarea->id;
         $comentarios=Comentario::belogsToOrdenado('IdTarea',$id);
         
         $router->render('lider/mostrar',[
             'comentarios'=>$comentarios,
-            'tarea'=>$tarea
+            'tarea'=>$tarea,
+            'url'=>$url
             
         ]);
     }
@@ -779,6 +788,7 @@ class LiderController{
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $tablon->sincronizar($_POST);
+            
             $alertas=$tablon->validarTablon();
             if(empty($alertas))
             {
@@ -788,6 +798,7 @@ class LiderController{
                     header("Location:/lider/proyectos?id=2");
                 }
             }
+            
         }
         $router->render('lider/actualizarTablon',[
             'tablon'=>$tablon,

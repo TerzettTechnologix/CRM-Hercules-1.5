@@ -142,8 +142,9 @@
                     <input type="file" id="imagen" class="form-control" name="imagen" accept="image/jpeg, image/png, image/jpeg" class="mb-2">
                     <label for="imagen" class="mt-2">Archivo (.xlsx .doc .pdf .docx .pptx)</label>
                     <input type="file" id="archivo" class="form-control" name="archivo" accept=".doc,.docx,.xlsx,.pptx,.pdf">
-                    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                    <button type="submit" class="btn btn-primary mt-2 pull-right">Guardar</button>
                   </form>
+                  <a href="/admin/proyectos/tablon?url=<?php echo $url ?>" type="submit" class="btn btn-primary">Volver</a>
                 </table>
               </div>
             </div>

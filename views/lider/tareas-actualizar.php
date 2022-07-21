@@ -157,7 +157,8 @@
                             </ul> 
                         <?php }?>
                       </div>
-                        <button href="/lider/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url ?>" type="submit" class="btn btn-primary">Actualizar</button>
+                        <button href="/lider/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url ?>" type="submit" class="btn btn-primary pull-right">Actualizar</button>
+                        <button href="/lider/proyectos/tablon?url=<?php echo $url ?>" type="submit" class="btn btn-primary">Volver</button>
                   </form>
                 </table>
               </div>

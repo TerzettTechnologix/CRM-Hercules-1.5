@@ -161,7 +161,7 @@
             </div>
               <?php } ?>
             </div>
-         
+            <a href="/usuario/proyectos/tablon?url=<?php echo $url ?>" type="submit" class="btn btn-primary">Volver</a>
           </div>
         </div>
       

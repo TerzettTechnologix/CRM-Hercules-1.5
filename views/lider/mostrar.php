@@ -157,11 +157,13 @@
                   <div class="card-footer text-muted">
                     <strong>Fecha de envio:<br></strong> <?php echo ($comentario->fecha); ?>
                   </div>
+                  
               </div>
+              
             </div>
               <?php } ?>
             </div>
-         
+            <a href="/lider/proyectos/tablon?url=<?php echo $url ?>" type="submit" class="btn btn-primary">Volver</a>
           </div>
         </div>
       

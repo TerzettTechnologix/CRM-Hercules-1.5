@@ -597,6 +597,7 @@ class AdminController{
             'usuariostarea'=>$usuariostarea,
             'alertas'=>$alertas,
             'resultado'=>$id,
+            'url'=>$url
             // 'UsuariosTareas'=>$usuariosTareaFiltrado
             
         ]);
@@ -698,7 +699,8 @@ class AdminController{
         }
         $router->render('admin/comentarios',[
             'tarea'=>$tarea,
-            'alertas'=>$alertas
+            'alertas'=>$alertas,
+            'url'=>$url
             
         ]);
     }
@@ -709,13 +711,19 @@ class AdminController{
         expira();
         $url=$_GET['url'];
         $tarea=Tarea::where('url',$url);
+        $IdGrupo=$tarea->IdGrupo;
+        $grupo=Grupo::where('id',$IdGrupo);
+        $idTablon=$grupo->idTablon;
+        $tablon=Tablon::where('id',$idTablon);
+        $url=$tablon->url;
         $id=$tarea->id;
         $comentarios=Comentario::belogsToOrdenado('IdTarea',$id);
         
         
         $router->render('admin/mostrar',[
             'comentarios'=>$comentarios,
-            'tarea'=>$tarea
+            'tarea'=>$tarea,
+            'url'=>$url
             
         ]);
     }
