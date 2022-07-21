@@ -104,9 +104,6 @@
             <a class="navbar-brand" href="#pablo">Administración de proyectos</a>
           </div>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
         </div>
       </nav>
       <!-- End Navbar -->

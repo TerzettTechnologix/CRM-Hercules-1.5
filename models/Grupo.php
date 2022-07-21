@@ -30,8 +30,8 @@ class Grupo extends ActiveRecord{
         if(!$this->nombre){
             self::$alertas['error'][]="El nombre es obligatorio";
         }
-        if(strlen($this->nombre) >= 21){
-            self::$alertas['error'][]="El nombre del grupo no puede ser mayor a 20 caracteres";
+        if(strlen($this->nombre) >= 50){
+            self::$alertas['error'][]="El nombre del grupo no puede ser mayor a 50 caracteres";
         }
         return self::$alertas;
     }

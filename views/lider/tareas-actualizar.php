@@ -150,8 +150,8 @@
                         <?php foreach($usuarios as $usuario) {?>
                             <ul class=" list-group-horizontal"> 
                               <li class="list-group-item">
-                                  <input class="form-check-input " type="checkbox" value="<?php echo $usuario->id?>" <?php  if ($usuario->activo===1) echo 'checked '?> id="usuario" name='CheckBox[]'>
-                                  <label class="form-check-label" for="usuario"><?php echo $usuario->nombre; ?>
+                              <input class="form-check-input " type="checkbox" value="<?php echo $usuario->id?>" <?php  if ($usuario->activo===1) echo 'checked '?> id=<?php  echo $usuario->id?> name='CheckBox[]'>
+                              <label class="form-check-label" for="<?php echo $usuario->id ?>"><?php echo $usuario->nombre; ?></label> </li> 
                                 </label> 
                               </li> 
                             </ul> 

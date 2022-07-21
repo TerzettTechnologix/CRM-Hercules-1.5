@@ -137,8 +137,8 @@
                         <textarea class="form-control" id="contenido" rows="3" placeholder="¿Que error ocurrio o que sugerencia tienes?" name="contenido"></textarea>
                      </div>
                     </div>
-                    <label for="imagen" class="mb-2">Imagen (.jpg .png . jpeg)</label>
-                    <input type="file" id="imagen" class="form-control" name="imagen" accept="image/jpeg, image/png" class="mb-2">
+                    <label for="imagen" class="mb-2">Imagen (.jpg .png .jpeg)</label>
+                    <input type="file" id="imagen" class="form-control" name="imagen" accept="image/jpeg, image/png, image/jpeg" class="mb-2">
                     <button type="submit" class="btn btn-primary mt-2">Guardar</button>
                   </form>
                   <label class="mb-2">¿Tienes alguna duda?</label>
