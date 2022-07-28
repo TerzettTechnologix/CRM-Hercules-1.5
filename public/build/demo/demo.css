@@ -75,4 +75,25 @@
 .titulo-center{
   text-align: center;
 }
+.progress .progress-bar > span {
+  position:relative;
+  height:100%;
+}
+.progress .progress-bar > span > * {
+  position:absolute;
+  top:0;
+  transition: opacity .3s ease-out;
+}
+
+.progress .grade {
+  opacity:0;
+}
+
+.progress:hover .grade {
+  opacity:1;
+}
+
+.progress:hover .percentage {
+  opacity:0;
+}
 

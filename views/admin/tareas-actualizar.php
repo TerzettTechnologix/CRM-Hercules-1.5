@@ -129,26 +129,16 @@
                 ?> 
                 <form action="/admin/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url ?>" method="POST">
                     <div class="form-group">
-                        <label for="nombre">Nombre del proyecto (Maximo 20 caracteres)</label>
+                        <label for="nombre">Nombre del proyecto</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo s($tarea->nombre) ?>">
                       </div>
                     <div class="form-group">
-                        <p>Estado :
-                            <?php if($tarea->estado=='0') $tarea->estado="Nueva" ?>
-                            <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
-                            <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
-                            <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
-                            <?php echo $tarea->estado ?>
-                            
-                        </p>
-                    <div class="form-group">
-                        <label for="estado">Cambiar estado</label>
-                        <select class="form-select" aria-label="Selecciona el lugar donde se desarrolla el proyecto" name="estado">
-                            <option value="0" <?php if($tarea->estado=='Nueva') echo "selected" ?>>Nueva</option>
-                            <option value="1" <?php  if($tarea->estado=='Estancada') echo "selected" ?>>Estancada</option>
-                            <option value="2" <?php  if($tarea->estado=='En proceso') echo "selected" ?>>En proceso</option>
-                            <option value="3" <?php  if($tarea->estado=='Lista') echo "selected" ?>>Lista</option>
-                        </select>
+                      <label for="fechaFinalizacion">Cambiar Fecha de Finalizacion</label><br>
+                      <input type="date" id="start" name="fechaFinalizacion" value="<?php echo $tarea->fechaFinalizacion?>" min="2022-22-07" max="2025-12-31">
+                      <br><label for="avance" class="mt-3">Cambiar porcentaje de avance: </label>
+                      <p>Actual: <?php echo $tarea->porcentaje . " " . "%"?></p>
+                      <input type="number" id="avance" name="porcentaje" min="0" max="100" value="<?php echo $tarea->porcentaje?>"> 
+                    </label>
                     </div>
                     <div class="form-group">
                       <label for="exampleFormControlInput1" class="form-label">Asignada para:</label>
@@ -165,9 +155,9 @@
                       </div>
                     </div>
                         <button href="/admin/proyectos/tablon/tareas-actualizar?url=<?php echo $tarea->url ?>" type="submit" class="btn btn-primary pull-right">Actualizar</button>
-                        <button href="/admin/proyectos/tablon?url=<?php echo $url ?>" type="submit" class="btn btn-primary">Volver</button>
                   </form>
                 </table>
+                <a href="/admin/proyectos/tablon?url=<?php echo $url ?>"  class="btn btn-primary">Volver</a>
               </div>
             </div>
           </div>

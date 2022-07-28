@@ -112,13 +112,43 @@
             
             <div class="row justify-content-center">
         <p class="col-2">
-             
-            
-        </p>
-        <p class="col-2">
-            
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseBarras" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <i class="now-ui-icons files_paper"></i>Info sobre barras
+            </a>
         </p>
         </div>
+        <div class="collapse" id="collapseBarras">
+        <div class="container">
+          <div class="card card-body">
+            <p>Informacion sobre las barras</p>
+            <p><strong>Barra 1: </strong></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="mt-3">El color verde en la barra indica que la tarea se ha completado satisfactoriamente</p>
+            <p><strong>Barra 2: </strong></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="mt-3">El color azul en la barra indica que aun quedan más de 30 días para que se pueda completar la tarea de acuerdo a la fecha de finalización</p>
+            <p><strong>Barra 3: </strong></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="mt-3">El color azul claro en la barra indica que quedan más de 7 días para que se pueda completar la tarea de acuerdo a la fecha de finalización</p>
+            <p><strong>Barra 4: </strong></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="mt-3">El color amarillo en la barra indica que quedan menos de 7 días para que se pueda completar la tarea de acuerdo a la fecha de finalización</p>
+            <p><strong>Barra 5: </strong></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="mt-3">El color rojo en la barra indica que se ha pasado la fecha de finalizacion sin haber completado la tarea satisfactoriamente</p>
+          </div>
+        </div>
+       </div>
         <?php
               include_once __DIR__."/../templates/alertas.php";
           ?>
@@ -135,10 +165,11 @@
                 <thead>
                   <tr>
                     <th scope="col"><?php echo $grupo->nombre ?></th>
-                    <th scope="col">PERSONAS</th>
-                    <th scope="col">ESTADO</th>
-                    <th scope="col">FECHA DE CREACION</th>
-                    <th scope="col">ACCIONES</th>
+                    <th scope="col"><strong>Asignación</strong></th>
+                    <th scope="col"><strong>Estado</strong></th>
+                    <th scope="col"><strong>Fecha de creación</strong></th>
+                    <th scope="col"><strong>Fecha de finalización</strong></th>
+                    <th scope="col"><strong>Acciones</strong></th>
                   </tr>
                 </thead>
                 <tbody> 
@@ -158,9 +189,22 @@
                         <?php if($tarea->estado=='1') $tarea->estado="Estancada" ?>
                         <?php if($tarea->estado=='2') $tarea->estado="En proceso" ?>
                         <?php if($tarea->estado=='3') $tarea->estado="Lista" ?>
-                        <td><?php echo $tarea->estado ?></td>
+
+                       <?php 
+                          if($tarea->color==0) $tarea->color="bg-success";
+                          if($tarea->color==1) $tarea->color="";
+                          if($tarea->color==2) $tarea->color="bg-info";
+                          if($tarea->color==3) $tarea->color="bg-warning";
+                          if($tarea->color==4) $tarea->color="bg-danger";
+                        ?>
+                        <td>
+                          <div class="progress" style="width: 210px">
+                            <div class="progress-bar progress-bar-striped . <?php echo $tarea->color ?>" role="progressbar" style="width: <?php echo $tarea->porcentaje  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><span><span class="percentage"><?php echo $tarea->porcentaje. "%" ?></span><span class="grade mt-4 color-white">Restantes</span></span></div>
+                          <div>
+                        </td>
                         
-                        <td class="text-center"><?php echo $tarea->fecha ?></td> 
+                        <td class="text-center"><?php echo $tarea->fecha ?></td>
+                        <td class="text-center"><?php echo date("d-m-Y",strtotime($tarea->fechaFinalizacion));?></td>
                         <td>
                         <a href="/usuario/proyectos/tablon/comentarios?url=<?php echo $tarea->url?>" rel="tooltip" title="Agregar comentarios-complementos" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" >
                               <i class="now-ui-icons ui-1_simple-add"></i>
@@ -175,10 +219,7 @@
                 </tbody>
               </table>
             <div class="progress">
-                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?php echo ($grupo->nuevas/$grupo->total) *100  ?>%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><?php echo "Nuevas" ." ". round(($grupo->nuevas/$grupo->total),2)  *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: <?php echo ($grupo->proceso/$grupo->total) *100  ?>%"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><?php echo "Proceso" ." ". round(($grupo->proceso/$grupo->total),2) *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: <?php echo ($grupo->estancadas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Estancadas" ." ". round(($grupo->estancadas/$grupo->total),2) *100 ." " ."%" ?></div>
-                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <?php echo ($grupo->listas/$grupo->total) *100  ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><?php echo "Listas" ." ". round(($grupo->listas/$grupo->total),2) *100 ." " ."%" ?></div>
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <?php echo (100 * ($grupo->total - $grupo->TotalHrs)) / $grupo->total  ?>%" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"><?php echo  " " . round((100 * ($grupo->total - $grupo->TotalHrs)) / $grupo->total,2)." " ."%" . " " . "Completado "?></div>
               </div> 
           </div>
         <?php } ?>

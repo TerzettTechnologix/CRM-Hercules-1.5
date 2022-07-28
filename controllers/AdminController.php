@@ -109,6 +109,7 @@ class AdminController{
         isAuth();
         expira();
         $alertas=[];
+       
         if(isset($_GET['id'])){
             $id=$_GET['id'];
             $id=filter_var($id,FILTER_VALIDATE_INT);
@@ -126,6 +127,7 @@ class AdminController{
             if(empty($alertas))
             {
                 $grupo->idTablon=$tablon->id;
+                $grupo->fechaInicio=date('d-m-Y');
                 $resultado=$grupo->guardar();
                 if($resultado){
                     header("Location: /admin/proyectos/tablon?url=$url1&id=1");
@@ -205,12 +207,14 @@ class AdminController{
             $resultado=$tarea->eliminar(); //Se elimina la tarea
             if($resultado){
                 $grupo=Grupo::where('id',$grupo->id); //Se hace una actualizacion del total de tareas que tiene ese grupo, eso se hace para que el uusario vea reflejada la eliminacion en la barra de progreso
+                $fechaFinal=calcularMaximoBorrar($grupo->id);
+                $grupo->fechaFinal=$fechaFinal;
+                $grupo->TotalHrs=$grupo->totalHrs($grupo->id);
                 $grupo->total=$grupo->total($grupo->id);
                 if($grupo->total==0)
                 {
                     $grupo->total=1;
                 }
-                
                 $grupo->nuevas=$grupo->estado($grupo->id,0);
                 $grupo->estancadas=$grupo->estado($grupo->id,1);
                 $grupo->proceso=$grupo->estado($grupo->id,2);
@@ -270,18 +274,16 @@ class AdminController{
         }else{
             $id=4;
         }
-        
         $url=$_GET['url'];
         $tablon=Tablon::where('url',$url);
         $idTablon=$tablon->id;
-       
         $grupos=Grupo::belogsToAsc('idTablon',$idTablon); // Obtienes todos los tablones pertenecientes a un grupo
-        
         if(!$url) header ("Location: /admin/proyectos");
         $tablon=Tablon::where('url',$url);
         $usuarios=Usuario::usuarioSinAdmin();
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
+        diasRestantes($tareas);
         $usuarioTareas=new UsuarioTarea();        
         $usuarioTareas=$usuarioTareas->usuariosTareas($tablon->id);
         foreach($grupos as $grupo)
@@ -293,17 +295,13 @@ class AdminController{
             {
                 $grupo->total=1;
             }
-            
             $grupo->nuevas=$grupo->estado($grupo->id,0);
             $grupo->estancadas=$grupo->estado($grupo->id,1);
             $grupo->proceso=$grupo->estado($grupo->id,2);
             $grupo->listas=$grupo->estado($grupo->id,3);
             
             $grupo->guardar();
-            
-            
         }
-        
         $router->render('admin/tablon',[
             'tablon'=>$tablon,
             'alertas'=>$alertas,
@@ -349,19 +347,24 @@ class AdminController{
                 $IdGrupo='';
             }
             $alertas=$tarea->validarTarea(); //Revisa si todos los otros objetos son correctos
+            $tarea->fechaFinalizacion=$_POST['fechaFinalizacion'];
             $tarea->estado='0'; //Pone cualquier nueva tarea en 0 Nueva
+            $tarea->porcentaje=0;
             $tarea->fecha=date('d-m-Y');
             $hash=md5(uniqid()); //crea un hash que va a ser el URL de esa tarea
             $tarea->url=$hash;
+            $totalHrs=calcularHrsTarea($tarea);
+            $tarea->totalHrs=$totalHrs;
+            $tarea->hrsRestantes=$totalHrs;
             if(!isset($_POST['CheckBox']))
             {
                 $alertas['error'][]="Debe seleccionar al menos un usuario para la tarea creada";
             }
-            
             if(empty($alertas)) //Si no hay errores guarda la tarea y llena la siguiente tabla que es usuariosTareas
             {
                 
                 $tarea->guardar();
+                calcularFechaMaxima($_POST['grupo'],$tarea);
                 $tarea=Tarea::where('url',$tarea->url); //Obtiene la tarea
                 $idTarea=$tarea->id; //Obtiene el id de la Tarea
                 $usuariosSeleccionados=array(); //Crea un array con los usuarios que se han seleccionado en el checkbox
@@ -385,6 +388,7 @@ class AdminController{
                     foreach($grupos as $grupo) //Llenar y actualizar la tabla  de grupo
                     {
                         $grupo=Grupo::where('id',$grupo->id);
+                        $grupo->TotalHrs=$grupo->totalHrs($grupo->id);
                         $grupo->total=$grupo->total($grupo->id);
                         if($grupo->total==0)
                         {
@@ -532,62 +536,85 @@ class AdminController{
         $url=$_GET['url'];
         $usuarios=Usuario::usuarioSinAdmin();
         $tarea=Tarea::where('url',$url);
-        $usuariostarea=UsuarioTarea::belogsTo('IdTarea',$tarea->id);
-        
-        // Se deja este modulo aqui pues es el inicio de lo que se tendria que hacer si se quisiera modificar tambien las personas que pertenecen a un tablon
+        $idGrupo=$tarea->IdGrupo;
+        $grupo=Grupo::where('id',$idGrupo);
+        $url=$grupo->idTablon;
+        $tablon=Tablon::where('id',$url);
+        $url=$tablon->url;
+        // if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
+        //     header("Location: /lider/proyectos");
+        // }
+        $usuariostarea=UsuarioTarea::belogsTo('IdTarea',$tarea->id);// Te regresa la tarea que se va a modificar
         foreach($usuariostarea as $usuariotarea)
         {
             foreach($usuarios as $usuario)
             {
                 if($usuario->id===$usuariotarea->IdUsuario)
                 {
-                    // debuguear($usuario);
                     $usuario->activo=1;
                 }
             }
         }
-        
         if($_SERVER['REQUEST_METHOD']==='POST')
         {
             $tarea=Tarea::where('url',$_GET['url']);
             $tarea->sincronizar($_POST);
+            $totalHrs=calcularHrsTarea($tarea);
+            $tarea->totalHrs=$totalHrs;
+            $porcentajeActualizado=($_POST['porcentaje']);
+            $hrsRestantes=calcularHrsRestantes($porcentajeActualizado,$tarea);
+            $tarea->hrsRestantes=$hrsRestantes;
+            $alertas=$tarea->validarTarea();
+            if(!isset($_POST['CheckBox']))
+            {
+                $alertas['error'][]="Debe seleccionar al menos un usuario para la tarea creada";
+            }
             $idGrupo=$tarea->IdGrupo;
             $grupo=Grupo::where('id',$idGrupo);
-            $resultado=$tarea->guardar();
-            $id=$tarea->id;
-            $usuariotarea->EliminarRegistro($id);
-            $usuariosSeleccionados=array(); //Crea un array con los usuarios que se han seleccionado en el checkbox
-            $usuariosSeleccionados=$_POST['CheckBox']; //Obtienes todos los valores que se encuentran en el checkbox
-            $longitud=sizeof($usuariosSeleccionados); //Obtiene el total de usuarios que se encuentran seleccioandos 
-            for($i=0;$i<$longitud;$i++) //Hace el recorrido para cada uno de los usuarios  y crea un nuevo objeto de Usuario Tarea donde registra a cada uno con la tarea correspondiente
+            $fechaFinalizacion=calcularPorcentaje($tarea);
+            $tarea->fechaFinalizacion=$fechaFinalizacion;
+            $url=$grupo->idTablon;
+            $tablon=Tablon::where('id',$url);
+            if(empty($alertas))
             {
+                $resultado=$tarea->guardar();
+                $id=$tarea->id;
                 $usuariotarea=new UsuarioTarea();
-                $usuariotarea->IdTarea=$id; //Guarda el id de la tarea
-                $usuariotarea->IdUsuario=$usuariosSeleccionados[$i]; //Guarda el id del usuario
-                $usuariotarea->crearVarios();
-            }
-                
-            
-            if($resultado)  //Vuelve a calcular las tareas del  grupo por si se llego a presentar algun cambio
-            {
-                
-                $grupo=Grupo::where('id',$grupo->id);
-                $grupo->total=$grupo->total($grupo->id);
-                if($grupo->total==0)
+                $usuariotarea->EliminarRegistro($id);
+                $usuariosSeleccionados=array(); //Crea un array con los usuarios que se han seleccionado en el checkbox
+                $usuariosSeleccionados=$_POST['CheckBox']; //Obtienes todos los valores que se encuentran en el checkbox
+                $longitud=sizeof($usuariosSeleccionados); //Obtiene el total de usuarios que se encuentran seleccioandos 
+                for($i=0;$i<$longitud;$i++) //Hace el recorrido para cada uno de los usuarios  y crea un nuevo objeto de Usuario Tarea donde registra a cada uno con la tarea correspondiente
                 {
-                    $grupo->total=1;
+                    $usuariotarea=new UsuarioTarea();
+                    $usuariotarea->IdTarea=$id; //Guarda el id de la tarea
+                    $usuariotarea->IdUsuario=$usuariosSeleccionados[$i]; //Guarda el id del usuario
+                    $usuariotarea->crearVarios();
                 }
-                $grupo->nuevas=$grupo->estado($grupo->id,0);
-                $grupo->estancadas=$grupo->estado($grupo->id,1);
-                $grupo->proceso=$grupo->estado($grupo->id,2);
-                $grupo->listas=$grupo->estado($grupo->id,3);
-                $grupo->guardar();
-                $url=$grupo->idTablon;
-                $tablon=Tablon::where('id',$url);
-                $url=$tablon->url;
-                header("Location: /admin/proyectos/tablon?url=$url&id=2");
+                if($resultado) //Actualiza la tabla de grupo con los cambios correspondientes a las tarea
+                {
+                    
+                    $grupo=Grupo::where('id',$grupo->id);
+                    $fecha=($_POST['fechaFinalizacion']);
+                    $fechaFinal=calcularMaximo($grupo->id,$fecha);
+                    $grupo->fechaFinal=$fechaFinal;
+                    $grupo->TotalHrs=$grupo->totalHrs($grupo->id);
+                    $grupo->total=$grupo->total($grupo->id);
+                    if($grupo->total==0)
+                    {
+                        $grupo->total=1;
+                    }
+                    $grupo->nuevas=$grupo->estado($grupo->id,0);
+                    $grupo->estancadas=$grupo->estado($grupo->id,1);
+                    $grupo->proceso=$grupo->estado($grupo->id,2);
+                    $grupo->listas=$grupo->estado($grupo->id,3);
+                    $grupo->guardar();
+                    $url=$grupo->idTablon;
+                    $tablon=Tablon::where('id',$url);
+                    $url=$tablon->url;
+                    header("Location: /admin/proyectos/tablon?url=$url&id=2");
+                }
             }
-
         }
         
         $router->render('admin/tareas-actualizar',[
@@ -598,7 +625,6 @@ class AdminController{
             'alertas'=>$alertas,
             'resultado'=>$id,
             'url'=>$url
-            // 'UsuariosTareas'=>$usuariosTareaFiltrado
             
         ]);
     }
@@ -718,8 +744,6 @@ class AdminController{
         $url=$tablon->url;
         $id=$tarea->id;
         $comentarios=Comentario::belogsToOrdenado('IdTarea',$id);
-        
-        
         $router->render('admin/mostrar',[
             'comentarios'=>$comentarios,
             'tarea'=>$tarea,
@@ -783,7 +807,21 @@ class AdminController{
             
         }
     }
-
+    public static function eliminarComentario(){
+        if($_SERVER['REQUEST_METHOD']==="POST"){
+            $id=$_GET['url'];
+            $comentario=Comentario::where('id',$id);
+            $tarea=Tarea::where('id',$comentario->IdTarea); 
+            $grupo=Grupo::where('id',$tarea->IdGrupo);
+            $tablon=Tablon::where('id',$grupo->idTablon);
+            $url=$tablon->url;
+            $persona=$_SESSION['nombre'];
+            $resultado=$comentario->eliminar();
+            if($resultado){
+                header("Location: /admin/proyectos/tablon?url=$url&id=3");
+            }
+        }
+    }
    
     
 

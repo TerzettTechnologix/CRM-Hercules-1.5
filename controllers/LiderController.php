@@ -183,6 +183,7 @@ class LiderController{
         $usuarios=Usuario::usuarioSinAdmin();
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Te recupera todas las tareas pertenecientes a ese tablon
+        diasRestantes($tareas);
         $usuarioTareas=new UsuarioTarea();        
         $usuarioTareas=$usuarioTareas->usuariosTareas($tablon->id);
         foreach($grupos as $grupo) //Llena la tabla de grupo con toda la informacion de tareas que se tengan respecto a ese tablon
@@ -268,7 +269,6 @@ class LiderController{
         //Crear un grupo dentro de un tablon
         isLider();
         expira();
-        
         // if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
         //     header("Location: /lider/proyectos");
         // }
@@ -293,6 +293,7 @@ class LiderController{
             {
                 
                 $grupo->idTablon=$tablon->id;
+                $grupo->fechaInicio=date('d-m-Y');
                 if($tablon->lider !== $_SESSION['nombre']){ //QUTITAR EL DEBUGEAR Y CAMBIAR POR UN HEADER
                     header("Location: /lider/proyectos");
                     
@@ -355,17 +356,20 @@ class LiderController{
             } 
             if(isset($_POST['grupo'])){
                 $IdGrupo=$_POST['grupo'];
-                $tarea->IdGrupo=$IdGrupo;
-                
-                
+                $tarea->IdGrupo=$IdGrupo; 
             }else{
                 $IdGrupo='';
             }
             $alertas=$tarea->validarTarea();
+            $tarea->fechaFinalizacion=$_POST['fechaFinalizacion'];
+            $tarea->porcentaje='0'; //Pone cualquier nueva tarea en 0 Nueva
             $tarea->estado='0';
             $tarea->fecha=date('d-m-Y');
             $hash=md5(uniqid());
             $tarea->url=$hash;
+            $totalHrs=calcularHrsTarea($tarea);
+            $tarea->totalHrs=$totalHrs;
+            $tarea->hrsRestantes=$totalHrs;
             if(!isset($_POST['CheckBox']))
             {
                 $alertas['error'][]="Debe seleccionar al menos un usuario para la tarea creada";
@@ -374,6 +378,7 @@ class LiderController{
             if(empty($alertas))
             {
                 $tarea->guardar();
+                calcularFechaMaxima($_POST['grupo'],$tarea);
                 $tarea=Tarea::where('url',$tarea->url);
                 $idTarea=$tarea->id;
                 $usuariosSeleccionados=array();//Se crear un array para guardar los usuarios
@@ -395,6 +400,7 @@ class LiderController{
                 foreach($grupos as $grupo) //Actualizar o llenar la tabla de grupo con las tareas del grupo en cuestion
                 {
                     $grupo=Grupo::where('id',$grupo->id);
+                    $grupo->TotalHrs=$grupo->totalHrs($grupo->id);
                     $grupo->total=$grupo->total($grupo->id);
                     if($grupo->total==0)
                     {   
@@ -469,6 +475,11 @@ class LiderController{
         {
             $tarea=Tarea::where('url',$_GET['url']);
             $tarea->sincronizar($_POST);
+            $totalHrs=calcularHrsTarea($tarea);
+            $tarea->totalHrs=$totalHrs;
+            $porcentajeActualizado=($_POST['porcentaje']);
+            $hrsRestantes=calcularHrsRestantes($porcentajeActualizado,$tarea);
+            $tarea->hrsRestantes=$hrsRestantes;
             $alertas=$tarea->validarTarea();
             if(!isset($_POST['CheckBox']))
             {
@@ -476,6 +487,8 @@ class LiderController{
             }
             $idGrupo=$tarea->IdGrupo;
             $grupo=Grupo::where('id',$idGrupo);
+            $fechaFinalizacion=calcularPorcentaje($tarea);
+            $tarea->fechaFinalizacion=$fechaFinalizacion;
             $url=$grupo->idTablon;
             $tablon=Tablon::where('id',$url);
             if(empty($alertas))
@@ -498,6 +511,10 @@ class LiderController{
                 {
                     
                     $grupo=Grupo::where('id',$grupo->id);
+                    $fecha=($_POST['fechaFinalizacion']);
+                    $fechaFinal=calcularMaximo($grupo->id,$fecha);
+                    $grupo->fechaFinal=$fechaFinal;
+                    $grupo->TotalHrs=$grupo->totalHrs($grupo->id);
                     $grupo->total=$grupo->total($grupo->id);
                     if($grupo->total==0)
                     {
@@ -550,6 +567,9 @@ class LiderController{
                 $resultado=$tarea->eliminar();
                 if($resultado){
                     $grupo=Grupo::where('id',$grupo->id);
+                    $fechaFinal=calcularMaximoBorrar($grupo->id);
+                    $grupo->fechaFinal=$fechaFinal;
+                    $grupo->TotalHrs=$grupo->totalHrs($grupo->id);
                     $grupo->total=$grupo->total($grupo->id);
                     if($grupo->total==0)
                     {
@@ -825,6 +845,25 @@ class LiderController{
             }
                   
             
+        }
+    }
+    public static function eliminarComentario(){
+        if($_SERVER['REQUEST_METHOD']==="POST"){
+            $id=$_GET['url'];
+            $comentario=Comentario::where('id',$id);
+            $tarea=Tarea::where('id',$comentario->IdTarea); 
+            $grupo=Grupo::where('id',$tarea->IdGrupo);
+            $tablon=Tablon::where('id',$grupo->idTablon);
+            $url=$tablon->url;
+            $persona=$_SESSION['nombre'];
+            if($comentario->nombre===$persona){
+                $resultado=$comentario->eliminar();
+                if($resultado){
+                    header("Location: /lider/proyectos/tablon?url=$url&id=3");
+                }
+            }else{
+                header ("Location: /lider/proyectos/tablon?url=$url");
+            }
         }
     }
     

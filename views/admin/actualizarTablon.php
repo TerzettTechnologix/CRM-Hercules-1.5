@@ -175,7 +175,8 @@
                     <label for="descripcion" class="form-label">Descripción</label>
                     <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion"  ><?php echo $tablon->descripcion?></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                <a href="/lider/proyectos" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             </div>

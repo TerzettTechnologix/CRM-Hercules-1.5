@@ -115,7 +115,6 @@ class UsuarioController{
     public static function tablon(Router $router)
     {
         //Mostar el tablon. Se pueden quitar algunas funciones que no se van a usar para este controller 
-       
         isUsuario();
         // expira();
         $url=$_GET['url'];
@@ -144,7 +143,7 @@ class UsuarioController{
        
         $idTablon=$tablon->id;
 
-        $grupos=Grupo::belogsTo('idTablon',$idTablon);
+        $grupos=Grupo::belogsToAsc('idTablon',$idTablon);
         $tablon=Tablon::where('url',$url);
         // if($tablon->idLider!==$_SESSION['id']){
         //     header ("Location: /admin/proyectos");
@@ -152,6 +151,7 @@ class UsuarioController{
         $usuarios=Usuario::all();
         $tareas=new Tarea();
         $tareas=$tareas->tareasRecuperar($tablon->id);  //Necesario en tablon
+        diasRestantes($tareas);
         $usuarioTareas=new UsuarioTarea();        
         $usuarioTareas=$usuarioTareas->usuariosTareas($tablon->id);
         foreach($grupos as $grupo)

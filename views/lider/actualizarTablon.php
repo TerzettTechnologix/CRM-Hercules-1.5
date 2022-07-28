@@ -154,11 +154,11 @@
             <div class="container">
                 <div class="card card-body">
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre del tablón (Maximo 35 caracteres)</label>
+                    <label for="nombre" class="form-label">Nombre del tablón (Es el nombre que se le dara al tablón)</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo ($tablon->nombre) ?>">
                 </div>
                 <div class="mb-3">
-                  <label for="lugar" class="form-label">Lugar del Tablon</label>
+                  <label for="lugar" class="form-label">Lugar del Tablon (Lugar donde se va a desarrollar el tablon)</label>
                   <select class="form-select" aria-label="Selecciona el lugar donde se desarrolla el proyecto" name="lugar">
                       <option value="0" <?php if($tablon->lugar==0) echo "selected" ?>>FORD</option>
                       <option value="1" <?php if($tablon->lugar==1) echo "selected" ?>>BD</option>
@@ -166,14 +166,17 @@
                      
                   </select>
                 <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción</label>
+                    <label for="descripcion" class="form-label">Descripción (Texto que describe de que se va a tratar el tablón)</label>
                     <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion"  ><?php echo $tablon->descripcion?></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                  <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                  <a href="/lider/proyectos" class="btn btn-primary">Volver</a>
                 </div>
             </div>
             </div>
+            
         </form>
+         
             </div>
          
           </div>

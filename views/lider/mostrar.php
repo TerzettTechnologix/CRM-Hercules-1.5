@@ -157,7 +157,9 @@
                   <div class="card-footer text-muted">
                     <strong>Fecha de envio:<br></strong> <?php echo ($comentario->fecha); ?>
                   </div>
-                  
+                  <form method="POST" action="/lider/proyectos/comentarios/eliminar?url=<?php echo $comentario->id?>">
+                    <button href="/lider/proyectos/comentarios/eliminar?url=<?php echo $comentario->id?>" rel="tooltip" title="Eliminar Comentario" class="btn btn-danger" >Eliminar Comentario</button>
+                  </form>
               </div>
               
             </div>

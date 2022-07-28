@@ -158,11 +158,11 @@
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre del tablón (Maximo 35 caracteres)</label>
+                    <label for="nombre" class="form-label">Nombre del tablón (Es el nombre que se le dara al tablón)</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Nombre del tablón" name="nombre" value="<?php echo s($tablon->nombre) ?>">
                 </div>
                 <div class="mb-3">
-                  <label for="lugar" class="form-label">Lugar del Tablon</label>
+                  <label for="lugar" class="form-label">Lugar del Tablon (Lugar donde se va a desarrollar el tablón)</label>
                   <select class="form-select" aria-label="Selecciona el lugar donde se desarrolla el proyecto" name="lugar">
                       <option value="0">FORD</option>
                       <option value="1">BD</option>
@@ -170,7 +170,7 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción</label>
+                    <label for="descripcion" class="form-label">Descripción (Texto para describir las caracteristicas del tablón)</label>
                     <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del tablón" name="descripcion" value="<?php echo s($tablon->nombre) ?>" ></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>

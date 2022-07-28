@@ -58,6 +58,12 @@ $router->get('/admin/proyectos/tablon/comentarios',[AdminController::class,'come
 $router->post('/admin/proyectos/tablon/comentarios',[AdminController::class,'comentarios']);
 
 
+//Eliminar comentario
+$router->post('/admin/proyectos/comentarios/eliminar',[AdminController::class,'eliminarComentario']);
+
+
+
+
 //Mostrar comentarios y archivos 
 $router->get('/admin/proyectos/tablon/contenido',[AdminController::class,'contenido']);
 //Proyectos
@@ -144,6 +150,9 @@ $router->post('/lider/proyectos/tablon/eliminar',[LiderController::class,'elimin
 //Comentarios, permite agregar un comentario a una tarea
 $router->get('/lider/proyectos/tablon/comentarios',[LiderController::class,'comentarios']);
 $router->post('/lider/proyectos/tablon/comentarios',[LiderController::class,'comentarios']);
+
+//Eliminar comentario
+$router->post('/lider/proyectos/comentarios/eliminar',[LiderController::class,'eliminarComentario']);
 
 //Eliminar un grupo
 $router->post('/lider/proyectos/grupo/eliminar',[LiderController::class,'eliminarGrupo']);

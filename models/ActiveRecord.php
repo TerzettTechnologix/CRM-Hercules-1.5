@@ -144,10 +144,13 @@ class ActiveRecord {
         
         if(!is_null($this->id)) {
             // actualizar
+            
             $resultado = $this->actualizar();
             
         } else {
             // Creando un nuevo registro
+         
+        
             $resultado = $this->crear();    
         }
         
@@ -205,10 +208,24 @@ class ActiveRecord {
     }
     public static function total($id)
     {
-        $query="SELECT count(*) as total FROM tareas where idGrupo=${id}";
+        $query="SELECT SUM(totalHrs) as total FROM tareas where idGrupo=${id}";
+        // debuguear($query);
         $resultado = self::consultarSQL($query);
         return $resultado[0]->total;
 
+    }
+    public static function totalHrs($id)
+    {
+        $query="SELECT SUM(hrsRestantes) as TotalHrs FROM tareas where idGrupo=${id}";
+        $resultado = self::consultarSQL($query);
+        return $resultado[0]->TotalHrs;
+                
+    }
+    public static function totalHrsLaborables($id)
+    {
+        $query="SELECT SUM(totalHrs) as totalAvanzado FROM tareas where idGrupo=${id}";
+        $resultado = self::consultarSQL($query);
+        return $resultado[0]->TotalHrs;
     }
     public static function estado($id,$valor)
     {
@@ -260,7 +277,7 @@ class ActiveRecord {
         $query .= " ) VALUES ('"; 
         $query .= join("', '", array_values($atributos));
         $query .= "') ";
-        
+        // debuguear($query);
         // Resultado de la consulta
         $resultado = self::$db->query($query);
         return [
@@ -350,7 +367,6 @@ class ActiveRecord {
         $query .=  join(', ', $valores );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
-        // debuguear($query);
         // Actualizar BD
         $resultado = self::$db->query($query);
         return $resultado;

@@ -1,3 +1,15 @@
+const barras=document.querySelector('.progress-bar');
+cargarEventListeners();
+function cargarEventListeners(){
+  //Cuando agregas un curso presionando "Agregar Carrito"
+  barras.addEventListener('click',agregarCurso)
+}
+function agregarCurso(e){
+  e.preventDefault();
+  console.log(e.target)
+  
+
+}
 demo = {
   initPickColor: function() {
     $('.pick-class-label').click(function() {
@@ -580,3 +592,4 @@ demo = {
     marker.setMap(map);
   }
 };
+
