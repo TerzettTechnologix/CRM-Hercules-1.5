@@ -75,25 +75,263 @@
 .titulo-center{
   text-align: center;
 }
-.progress .progress-bar > span {
-  position:relative;
-  height:100%;
-}
-.progress .progress-bar > span > * {
-  position:absolute;
-  top:0;
-  transition: opacity .3s ease-out;
+.info {
+  position: relative;
 }
 
-.progress .grade {
-  opacity:0;
+.info #vendedorTabla{
+  display: none;
+}
+.info:hover #vendedorTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.ventaHover {
+  position: relative;
 }
 
-.progress:hover .grade {
-  opacity:1;
+.ventaHover #numeroVentaTabla{
+  display: none;
+}
+.ventaHover:hover #numeroVentaTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.hoverAlgoritmo {
+  position: relative;
 }
 
-.progress:hover .percentage {
-  opacity:0;
+.hoverAlgoritmo #algoritmoTabla{
+  display: none;
+}
+.hoverAlgoritmo:hover #algoritmoTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.hoverCliente {
+  position: relative;
 }
 
+.hoverCliente #clienteTabla{
+  display: none;
+}
+.hoverCliente:hover #clienteTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.solicitadoHover {
+  position: relative;
+}
+
+.solicitadoHover #solicitadoTabla{
+  display: none;
+}
+.solicitadoHover:hover #solicitadoTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.PesoHover {
+  position: relative;
+}
+
+.PesoHover #PesoTabla{
+  display: none;
+}
+.PesoHover:hover #PesoTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.dolarHover {
+  position: relative;
+}
+
+.dolarHover #dolarTabla{
+  display: none;
+}
+.dolarHover:hover #dolarTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.hoverAdquisicion {
+  position: relative;
+}
+
+.hoverAdquisicion #adquisicionTabla{
+  display: none;
+}
+.hoverAdquisicion:hover #adquisicionTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.aduanaHover {
+  position: relative;
+}
+
+.aduanaHover #aduanaTabla{
+  display: none;
+}
+.aduanaHover:hover #aduanaTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.costeTransporteHover {
+  position: relative;
+}
+
+.costeTransporteHover #costeTransporteTabla{
+  display: none;
+}
+.costeTransporteHover:hover #costeTransporteTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.itemTransporteHover {
+  position: relative;
+}
+
+.itemTransporteHover #itemTransporteTabla{
+  display: none;
+}
+.itemTransporteHover:hover #itemTransporteTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.fleteHover {
+  position: relative;
+}
+
+.fleteHover #fleteTabla{
+  display: none;
+}
+.fleteHover:hover #fleteTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 20px;
+    min-height: 200px;
+    min-width: 200px;
+}
+.validezPropuestaHover {
+  position: relative;
+}
+
+.validezPropuestaHover #validezProuestaTabla{
+  display: none;
+}
+.validezPropuestaHover:hover #validezProuestaTabla{
+  display: block;
+    position: absolute;
+    right:0%;
+    left: 65%;
+
+    top:0%;
+    z-index: 1;
+    background-color: black;
+    padding: 10px;
+    min-height: 200px;
+    min-width: 200px;
+}

@@ -37,7 +37,7 @@ $router->post('/admin/proyectos/filtro',[AdminController::class,'filtro']);
 $router->get('/admin/proyectos/tablon/tareas-actualizar',[AdminController::class,'tareas']);
 $router->post('/admin/proyectos/tablon/tareas-actualizar',[AdminController::class,'tareas']);
 
-$router->get('/Retro',[AdminController::class,'retro']);
+
 //Admin
 //Menu Te dirige a la parte de usuarios, donde el adminstrador puede crear usuarios, modificarlos o eliminarlos
 $router->get('/admin/usuarios',[AdminController::class,'menu']);
@@ -56,12 +56,6 @@ $router->post('/admin/usuarios/eliminar-usuario',[AdminController::class,'elimin
 //Comentarios, permite crear comentarios, en las tareas, tambien se podra subir archivos aqui
 $router->get('/admin/proyectos/tablon/comentarios',[AdminController::class,'comentarios']);
 $router->post('/admin/proyectos/tablon/comentarios',[AdminController::class,'comentarios']);
-
-
-//Eliminar comentario
-$router->post('/admin/proyectos/comentarios/eliminar',[AdminController::class,'eliminarComentario']);
-
-
 
 
 //Mostrar comentarios y archivos 
@@ -83,9 +77,6 @@ $router->post('/admin/proyectos/grupo',[AdminController::class,'grupo']);
 //Mostrar el tablon que el usario selecciona
 $router->get('/admin/proyectos/tablon',[AdminController::class,'tablon']);
 
-//Modificar un tablon
-$router->get('/admin/proyectos/tablon/editar',[AdminController::class,'proyectoactualizar']);
-$router->post('/admin/proyectos/tablon/editar',[AdminController::class,'proyectoactualizar']);
 
 //Crear tareas a grupos
 $router->post('/admin/proyectos/tarea',[AdminController::class,'tarea']);
@@ -97,8 +88,10 @@ $router->get('/admin/usuario',[AdminController::class,'usuario']);
 $router->get('/admin/password',[AdminController::class,'password']);
 $router->post('/admin/password',[AdminController::class,'password']);
 
-//Eliminar un grupo
-$router->post('/admin/proyectos/grupo/eliminar',[AdminController::class,'eliminarGrupo']);
+//Comercializadora
+$router->get('/admin/propuestas',[AdminController::class,'propuestas']);
+$router->get('/admin/propuesta-crear',[AdminController::class,'crearPropuesta']);
+$router->post('/admin/api/propuesta-leer',[AdminController::class,'leerPropuesta']);
 
 
 //Lideres
@@ -128,10 +121,6 @@ $router->post('/lider/proyectos/tablon/pdf',[LiderController::class,'pdf']);
 //Eliminar tablon permite al lider eliminar un tablon seleccionado, cuando se elimina lo manda hacia una nueva ventana que le permite descargar su pdf
 $router->post('/lider/proyectos/eliminar',[LiderController::class,'proyectoseliminar']);
 
-//Modificar un tablon
-$router->get('/lider/proyectos/tablon/editar',[LiderController::class,'proyectoactualizar']);
-$router->post('/lider/proyectos/tablon/editar',[LiderController::class,'proyectoactualizar']);
-
 //Crear un grupo, crea un grupo dentro del tablon seleccionado
 $router->post('/lider/proyectos/grupo',[LiderController::class,'grupo']);
 
@@ -151,18 +140,13 @@ $router->post('/lider/proyectos/tablon/eliminar',[LiderController::class,'elimin
 $router->get('/lider/proyectos/tablon/comentarios',[LiderController::class,'comentarios']);
 $router->post('/lider/proyectos/tablon/comentarios',[LiderController::class,'comentarios']);
 
-//Eliminar comentario
-$router->post('/lider/proyectos/comentarios/eliminar',[LiderController::class,'eliminarComentario']);
-
-//Eliminar un grupo
-$router->post('/lider/proyectos/grupo/eliminar',[LiderController::class,'eliminarGrupo']);
 
 //Mostrar comentarios y archivos, muestra los archivos o comentarios que ha creado
 $router->get('/lider/proyectos/tablon/contenido',[LiderController::class,'contenido']);
 
 //Comentar y descargar manual.
-$router->get('/AyudaLider',[LiderController::class,'retro']);
-$router->post('/AyudaLider',[LiderController::class,'retro']);
+$router->get('/Ayuda',[LiderController::class,'retro']);
+$router->post('/Ayuda',[LiderController::class,'retro']);
 
 //Usuarios
 $router->get('/usuario/usuario',[UsuarioController::class,'usuario']);
@@ -190,8 +174,7 @@ $router->post('/usuario/proyectos/tablon/comentarios',[UsuarioController::class,
 $router->get('/usuario/proyectos/tablon/contenido',[UsuarioController::class,'contenido']);
 
 //Comentar y descargar manual.
-$router->get('/Ayuda',[UsuarioController::class,'retro']);
-$router->post('/Ayuda',[UsuarioController::class,'retro']);
+$router->get('/Retro',[AdminController::class,'retro']);
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
